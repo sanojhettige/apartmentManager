@@ -16,7 +16,7 @@ namespace ApartmentManager.Dtos
         public string Name { get; set; }
 
         [Required(ErrorMessage = "please enter square feets")]
-        public int SqurareFeets { get; set; }
+        public int SquareFeets { get; set; }
 
         [Required(ErrorMessage = "please enter maintenance charge")]
         public decimal MaintenanceCharge { get; set; }

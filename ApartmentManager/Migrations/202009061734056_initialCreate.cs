@@ -30,7 +30,7 @@ namespace ApartmentManager.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 100),
-                        SqurareFeets = c.Int(nullable: false),
+                        SquareFeets = c.Int(nullable: false),
                         MaintenanceCharge = c.Decimal(nullable: false, precision: 18, scale: 2),
                         NumRooms = c.Int(nullable: false),
                         NumBathRooms = c.Int(nullable: false),

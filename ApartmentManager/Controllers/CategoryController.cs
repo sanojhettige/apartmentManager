@@ -73,7 +73,7 @@ namespace ApartmentManager.Controllers
             {
                 var selectedCategory = _context.ApartmentType.Single(m => m.Id == category.Id);
                 selectedCategory.Name = category.Name;
-                selectedCategory.SqurareFeets = category.SqurareFeets;
+                selectedCategory.SquareFeets = category.SquareFeets;
                 selectedCategory.NumRooms = category.NumRooms;
                 selectedCategory.NumBathRooms = category.NumBathRooms;
                 selectedCategory.MaintenanceCharge = category.MaintenanceCharge;

@@ -14,7 +14,7 @@ namespace ApartmentManager.Models
         [StringLength(100)]
         public string Name { get; set; }
 
-        public int SqurareFeets { get; set; }
+        public int SquareFeets { get; set; }
 
         public decimal MaintenanceCharge { get; set; }
 
