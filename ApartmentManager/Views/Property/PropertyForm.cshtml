@@ -1,0 +1,97 @@
+﻿@model ApartmentManager.ViewModels.PropertyFormViewModel
+
+@{ /**/
+
+    ViewBag.Title = "Create Property";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+@using (Html.BeginForm("Save", "Property"))
+{
+    <div class="row">
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Property.PropertyName)
+            @Html.TextBoxFor(m => m.Property.PropertyName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Property.PropertyName)
+        </div>
+
+        
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Property.Address)
+            @Html.TextBoxFor(m => m.Property.Address, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Property.Address)
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Property.PhoneNumber)
+            @Html.TextBoxFor(m => m.Property.PhoneNumber, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Property.PhoneNumber)
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Property.EmailAddress)
+            @Html.TextBoxFor(m => m.Property.EmailAddress, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Property.EmailAddress)
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Property.FaxNumber)
+            @Html.TextBoxFor(m => m.Property.FaxNumber, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Property.FaxNumber)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Property.NumFloors)
+            @Html.TextBoxFor(m => m.Property.NumFloors, new { @class = "form-control", type = "number" })
+            @Html.ValidationMessageFor(m => m.Property.NumFloors)
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Property.NumUnits)
+            @Html.TextBoxFor(m => m.Property.NumUnits, new { @class = "form-control", type = "number" })
+            @Html.ValidationMessageFor(m => m.Property.NumUnits)
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="form-group col-md-6">
+            <div class="checkbox">
+                <label>
+                    @Html.CheckBoxFor(m => m.Property.PoolExists) Pool Exists?
+                </label>
+            </div>
+        </div>
+
+
+        <div class="form-group col-md-6">
+            <div class="checkbox">
+                <label>
+                    @Html.CheckBoxFor(m => m.Property.GymExists) Gym Exists?
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-12">
+            @Html.LabelFor(m => m.Property.OtherAmenities)
+            @Html.TextBoxFor(m => m.Property.OtherAmenities, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Property.OtherAmenities)
+        </div>
+    </div>
+                
+@Html.HiddenFor(m => m.Property.Id)
+@Html.AntiForgeryToken()
+ <button type="submit" class="btn btn-primary">Save</button>}
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

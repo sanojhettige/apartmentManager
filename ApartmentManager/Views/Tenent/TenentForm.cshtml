@@ -1,0 +1,65 @@
+﻿@model ApartmentManager.ViewModels.TenentFormViewModel
+
+@{ /**/
+
+    ViewBag.Title = "Create Tenent";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+@using (Html.BeginForm("Save", "Tenent"))
+{
+    <div class="row">
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Tenent.ApartmentId)
+            @Html.DropDownListFor(m => m.Tenent.ApartmentId, new SelectList(Model.Apartments, "Id", "UnitNo"), "Select Apartment ", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Tenent.ApartmentId)
+        </div>
+    </div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Tenent.Name)
+        @Html.TextBoxFor(m => m.Tenent.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Tenent.Name)
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Tenent.NicNo)
+        @Html.TextBoxFor(m => m.Tenent.NicNo, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Tenent.NicNo)
+    </div>
+
+
+</div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(m => m.Tenent.EmailAddress)
+                        @Html.TextBoxFor(m => m.Tenent.EmailAddress, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Tenent.EmailAddress)
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(m => m.Tenent.PhoneNumber)
+                        @Html.TextBoxFor(m => m.Tenent.PhoneNumber, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Tenent.PhoneNumber)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(m => m.Tenent.TenentFrom)
+                        @Html.TextBoxFor(m => m.Tenent.TenentFrom, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Tenent.TenentFrom)
+                    </div>
+
+                </div>
+
+
+
+
+                                @Html.HiddenFor(m => m.Tenent.Id)
+                                                @Html.AntiForgeryToken()
+                                                                <button type="submit" class="btn btn-primary">Save</button>}
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

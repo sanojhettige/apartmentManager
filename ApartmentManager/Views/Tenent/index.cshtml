@@ -1,0 +1,70 @@
+﻿@model IEnumerable<ApartmentManager.Models.Tenent>
+
+@{ ViewBag.Title = "Tenents";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<p>
+    @Html.ActionLink("New Tenent", "Create", "Tenent", null, new { @class = "btn btn-primary" })
+</p>
+<table id="tenents" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Nic No</th>
+            <th>Phone Number</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts
+{
+    <script>$(document).ready(function () {
+            var table = $("#tenents").DataTable({
+                ajax: {
+                    url: "/api/tenent",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data, type, tenent) {
+                            return "<a href='/tenent/edit/" + tenent.id + "'>" + tenent.name + "</a>";
+                        }
+                    },
+
+                    {
+                        data: "nicNo"
+                    },
+                    {
+                        data: "phoneNumber",
+                    },
+                    {
+                        data: "id",
+                        render: function (data, type, tenent) {
+                            let content = "<a href='/tenent/edit/" + tenent.id + "' class='btn btn-success btn-sm'>Edit</a>";
+                            content += "<button class='btn btn-danger btn-sm delete' data-tenent-id=" + data + ">Delete</button>";
+
+                            return "<div class='btn-group'>"+content+"</div>";
+                        }
+                    }
+                ]
+            });
+
+    $("#tenents").on("click", ".delete", function () {
+                var button = $(this).attr("data-tenent-id");
+                if (confirm("are you sure you want to delete the owner?")) {
+                    $.ajax({
+                        url: "/api/tenent/" + button,
+                        method: "DELETE",
+                        Successs: function () {
+
+                            table.row(buttons.parents("tr")).remove().draw();
+
+
+                        }
+                    })
+                }
+            })
+        })</script>
+}

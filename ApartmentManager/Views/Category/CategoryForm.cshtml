@@ -1,0 +1,57 @@
+﻿@model ApartmentManager.ViewModels.ApartmentTypeFormViewModel
+
+@{ /**/
+
+    ViewBag.Title = "Create Apartment Type";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+@using (Html.BeginForm("Save", "Category"))
+{
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.ApartmentType.Name)
+        @Html.TextBoxFor(m => m.ApartmentType.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ApartmentType.Name)
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.ApartmentType.SqurareFeets)
+        @Html.TextBoxFor(m => m.ApartmentType.SqurareFeets, new { @class = "form-control", type="number" })
+        @Html.ValidationMessageFor(m => m.ApartmentType.SqurareFeets)
+    </div>
+
+
+</div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(m => m.ApartmentType.NumRooms)
+                        @Html.TextBoxFor(m => m.ApartmentType.NumRooms, new { @class = "form-control", type="number" })
+                        @Html.ValidationMessageFor(m => m.ApartmentType.NumRooms)
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(m => m.ApartmentType.NumBathRooms)
+                        @Html.TextBoxFor(m => m.ApartmentType.NumBathRooms, new { @class = "form-control", type="number" })
+                        @Html.ValidationMessageFor(m => m.ApartmentType.NumBathRooms)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(m => m.ApartmentType.MaintenanceCharge)
+                        @Html.TextBoxFor(m => m.ApartmentType.MaintenanceCharge, new { @class = "form-control", type = "number" })
+                        @Html.ValidationMessageFor(m => m.ApartmentType.MaintenanceCharge)
+                    </div>
+                </div>
+
+
+
+
+                                @Html.HiddenFor(m => m.ApartmentType.Id)
+                                                @Html.AntiForgeryToken()
+                                                                <button type="submit" class="btn btn-primary">Save</button>}
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

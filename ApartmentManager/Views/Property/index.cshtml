@@ -1,0 +1,79 @@
+﻿@model IEnumerable<ApartmentManager.Models.Apartment>
+
+@{ ViewBag.Title = "Apartments";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<h2>Movies</h2>
+<p>
+    @Html.ActionLink("New Property", "Create", "Property", null, new { @class = "btn btn-primary" })
+</p>
+<table id="properties" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Apartments</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            //$("#customers").DataTable({
+            var table = $("#properties").DataTable({
+                ajax: {
+                    url: "/api/property",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "propertyName",
+                        render: function (data, type, property) {
+                            return "<a href='/property/edit/" + property.id + "'>" + property.propertyName + "</a>";
+                        }
+                    },
+
+                    {
+                        data: "address"
+                    },
+                    {
+                        data: "numUnits",
+                        render: function (data, type, property) {
+                            return "<a href='/property/apartments/" + property.id + "'>" + property.numUnits + "</a>";
+                        }
+                    },
+                    {
+                        data: "id",
+                        render: function (data, type, property) {
+                            let content = "<a href='/property/edit/" + property.id + "' class='btn btn-success btn-sm'>Edit</a>";
+                            content += "<a href='/property/apartments/" + property.id + "' class='btn btn-info btn-sm'>Apartments</a>";
+                            content += "<button class='btn btn-danger btn-sm delete' data-property-id=" + data + ">Delete</button>";
+
+                            return "<div class='btn-group'>"+content+"</div>";
+                        }
+                    }
+                ]
+            });
+
+            $("#properties").on("click", ".delete", function () {
+                var button = $(this).attr("data-property-id");
+                if (confirm("are you sure you want to delete the property?")) {
+                    $.ajax({
+                        url: "/api/property/" + button,
+                        method: "DELETE",
+                        Successs: function () {
+
+                            table.row(buttons.parents("tr")).remove().draw();
+
+
+                        }
+                    })
+                }
+            })
+        })
+
+    </script>
+}

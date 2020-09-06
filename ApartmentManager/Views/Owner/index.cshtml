@@ -1,0 +1,70 @@
+﻿@model IEnumerable<ApartmentManager.Models.Owner>
+
+@{ ViewBag.Title = "Owners";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<p>
+    @Html.ActionLink("New Owner", "Create", "Owner", null, new { @class = "btn btn-primary" })
+</p>
+<table id="owners" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Nic No</th>
+            <th>Phone Number</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts
+{
+    <script>$(document).ready(function () {
+            var table = $("#owners").DataTable({
+                ajax: {
+                    url: "/api/owner",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data, type, owner) {
+                            return "<a href='/owner/edit/" + owner.id + "'>" + owner.name + "</a>";
+                        }
+                    },
+
+                    {
+                        data: "nicNo"
+                    },
+                    {
+                        data: "phoneNumber",
+                    },
+                    {
+                        data: "id",
+                        render: function (data, type, owner) {
+                            let content = "<a href='/owner/edit/" + owner.id + "' class='btn btn-success btn-sm'>Edit</a>";
+                            content += "<button class='btn btn-danger btn-sm delete' data-owner-id=" + data + ">Delete</button>";
+
+                            return "<div class='btn-group'>"+content+"</div>";
+                        }
+                    }
+                ]
+            });
+
+            $("#owners").on("click", ".delete", function () {
+                var button = $(this).attr("data-owner-id");
+                if (confirm("are you sure you want to delete the owner?")) {
+                    $.ajax({
+                        url: "/api/owner/" + button,
+                        method: "DELETE",
+                        Successs: function () {
+
+                            table.row(buttons.parents("tr")).remove().draw();
+
+
+                        }
+                    })
+                }
+            })
+        })</script>
+}

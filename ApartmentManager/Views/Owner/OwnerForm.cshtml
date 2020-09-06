@@ -1,0 +1,50 @@
+﻿@model ApartmentManager.ViewModels.OwnerFormViewModel
+
+@{ /**/
+
+    ViewBag.Title = "Create Owner";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+@using (Html.BeginForm("Save", "Owner"))
+{
+    <div class="row">
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Owner.Name)
+            @Html.TextBoxFor(m => m.Owner.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Owner.Name)
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Owner.NicNo)
+            @Html.TextBoxFor(m => m.Owner.NicNo, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Owner.NicNo)
+        </div>
+
+
+    </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(m => m.Owner.EmailAddress)
+                        @Html.TextBoxFor(m => m.Owner.EmailAddress, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Owner.EmailAddress)
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(m => m.Owner.PhoneNumber)
+                        @Html.TextBoxFor(m => m.Owner.PhoneNumber, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Owner.PhoneNumber)
+                    </div>
+                </div>
+
+
+
+
+                                                                                                @Html.HiddenFor(m => m.Owner.Id)
+                                                                                                                @Html.AntiForgeryToken()
+                                                                                                                                <button type="submit" class="btn btn-primary">Save</button>}
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

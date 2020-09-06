@@ -1,0 +1,70 @@
+﻿@model IEnumerable<ApartmentManager.Models.ApartmentType>
+
+@{ ViewBag.Title = "Categories";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<p>
+    @Html.ActionLink("New Category", "Create", "Category", null, new { @class = "btn btn-primary" })
+</p>
+<table id="categories" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Squre Feets</th>
+            <th>No Rooms/Baths</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts
+{
+    <script>$(document).ready(function () {
+            var table = $("#categories").DataTable({
+                ajax: {
+                    url: "/api/category",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data, type, category) {
+                            return "<a href='/category/edit/" + category.id + "'>" + category.name + "</a>";
+                        }
+                    },
+
+                    {
+                        data: "squreFeets"
+                    },
+                    {
+                        data: "numRooms",
+                    },
+                    {
+                        data: "id",
+                        render: function (data, type, category) {
+                            let content = "<a href='/category/edit/" + category.id + "' class='btn btn-success btn-sm'>Edit</a>";
+                            content += "<button class='btn btn-danger btn-sm delete' data-category-id=" + data + ">Delete</button>";
+
+                            return "<div class='btn-group'>"+content+"</div>";
+                        }
+                    }
+                ]
+            });
+
+    $("#categories").on("click", ".delete", function () {
+        var button = $(this).attr("data-category-id");
+        if (confirm("are you sure you want to delete the category?")) {
+                    $.ajax({
+                        url: "/api/category/" + button,
+                        method: "DELETE",
+                        Successs: function () {
+
+                            table.row(buttons.parents("tr")).remove().draw();
+
+
+                        }
+                    })
+                }
+            })
+        })</script>
+}
