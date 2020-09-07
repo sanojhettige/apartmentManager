@@ -214,19 +214,18 @@
     <Compile Include="Controllers\Api\ApartmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TenentController.cs" />
-    <Compile Include="Dtos\CategoryDto.cs" />
+    <Compile Include="Dtos\ApartmentTypeDto.cs" />
     <Compile Include="Dtos\PropertyDto.cs" />
     <Compile Include="Dtos\AprtmentDto.cs" />
     <Compile Include="Dtos\OwnerDto.cs" />
     <Compile Include="Dtos\TenentDto.cs" />
-    <Compile Include="Dtos\ApartmentTypeDto.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202009061734056_initialCreate.cs" />
-    <Compile Include="Migrations\202009061734056_initialCreate.Designer.cs">
-      <DependentUpon>202009061734056_initialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202009070451200_initialCreate.cs" />
+    <Compile Include="Migrations\202009070451200_initialCreate.Designer.cs">
+      <DependentUpon>202009070451200_initialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -2412,6 +2411,7 @@
     <Content Include="Views\Tenent\TenentForm.cshtml" />
     <Content Include="Views\Category\index.cshtml" />
     <Content Include="Views\Category\CategoryForm.cshtml" />
+    <Content Include="Views\Apartment\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2436,8 +2436,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202009061734056_initialCreate.resx">
-      <DependentUpon>202009061734056_initialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009070451200_initialCreate.resx">
+      <DependentUpon>202009070451200_initialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

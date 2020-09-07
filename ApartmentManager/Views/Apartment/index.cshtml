@@ -1,0 +1,67 @@
+﻿@model ApartmentManager.Models.Property
+@{ ViewBag.Title = "Apartments";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<h2>Apartments</h2>
+<p>
+    @Html.ActionLink("New Apartment", "create/1", "apartment", null, new { @class = "btn btn-primary" })
+</p>
+<table id="apartments" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Floor</th>
+            <th>House No</th>
+            <th>Owner Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts
+{
+    <script>$(document).ready(function () {
+            var table = $("#apartments").DataTable({
+                ajax: {
+                    url: "/api/apartment",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "floorNo"
+                    },
+
+                    {
+                        data: "unitNo"
+                    },
+                    {
+                        data: "ownerId.Name"
+                    },
+                    {
+                        data: "id",
+                        render: function (data, type, unit) {
+                            let content = "<a href='/apartment/" + unit.id + "' class='btn btn-success btn-sm'>Edit</a>";
+                            content += "<button class='btn btn-danger btn-sm delete' data-apartment-id=" + data + ">Delete</button>";
+
+                            return "<div class='btn-group'>" + content + "</div>";
+                        }
+                    }
+                ]
+            });
+
+            $("#apartments").on("click", ".delete", function () {
+                var button = $(this).attr("data-apartment-id");
+                if (confirm("are you sure you want to delete the apartment?")) {
+                    $.ajax({
+                        url: "/api/apartment/" + button,
+                        method: "DELETE",
+                        Successs: function () {
+
+                            table.row(buttons.parents("tr")).remove().draw();
+
+
+                        }
+                    })
+                }
+            })
+        })</script>
+}

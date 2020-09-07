@@ -8,21 +8,24 @@ namespace ApartmentManager.Models
 
     public partial class Owner
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
-        public int ApartmentId { get; set; }
 
         [Required]
         [StringLength(100)]
         public string Name { get; set; }
 
+        [Display(Name = "NIC No")]
         [StringLength(20)]
         public string NicNo { get; set; }
 
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
+        [Display(Name = "Email Address")]
         public string EmailAddress { get; set; }
 
+        [Display(Name = "Ownership Started Date")]
         public DateTime OwnerFrom { get; set; }
 
         public string CreatedBy { get; set; }

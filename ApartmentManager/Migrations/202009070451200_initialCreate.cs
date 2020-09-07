@@ -14,6 +14,8 @@ namespace ApartmentManager.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         PropertyId = c.Int(nullable: false),
                         OwnerId = c.Int(nullable: false),
+                        TenentId = c.Int(nullable: false),
+                        ApartmentTypeId = c.Int(nullable: false),
                         FloorNo = c.Int(nullable: false),
                         UnitNo = c.Int(nullable: false),
                         CreatedBy = c.String(),
@@ -22,7 +24,15 @@ namespace ApartmentManager.Migrations
                         ModifiedAt = c.DateTime(nullable: false),
                         Status = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.ApartmentTypes", t => t.ApartmentTypeId, cascadeDelete: true)
+                .ForeignKey("dbo.Owners", t => t.OwnerId, cascadeDelete: true)
+                .ForeignKey("dbo.Properties", t => t.PropertyId, cascadeDelete: true)
+                .ForeignKey("dbo.Tenents", t => t.TenentId, cascadeDelete: true)
+                .Index(t => t.PropertyId)
+                .Index(t => t.OwnerId)
+                .Index(t => t.TenentId)
+                .Index(t => t.ApartmentTypeId);
             
             CreateTable(
                 "dbo.ApartmentTypes",
@@ -47,7 +57,6 @@ namespace ApartmentManager.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        ApartmentId = c.Int(nullable: false),
                         Name = c.String(nullable: false, maxLength: 100),
                         NicNo = c.String(maxLength: 20),
                         PhoneNumber = c.String(),
@@ -67,9 +76,9 @@ namespace ApartmentManager.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         PropertyName = c.String(nullable: false, maxLength: 100),
-                        Address = c.String(),
-                        PhoneNumber = c.String(),
-                        EmailAddress = c.String(),
+                        Address = c.String(nullable: false),
+                        PhoneNumber = c.String(nullable: false),
+                        EmailAddress = c.String(nullable: false),
                         FaxNumber = c.String(),
                         NumFloors = c.Int(nullable: false),
                         NumUnits = c.Int(nullable: false),
@@ -79,6 +88,25 @@ namespace ApartmentManager.Migrations
                         CreatedBy = c.Int(nullable: false),
                         CreatedAt = c.DateTime(nullable: false),
                         ModifiedBy = c.Int(nullable: false),
+                        ModifiedAt = c.DateTime(nullable: false),
+                        Status = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Tenents",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 100),
+                        NicNo = c.String(maxLength: 20),
+                        PhoneNumber = c.String(),
+                        EmailAddress = c.String(),
+                        TenentFrom = c.DateTime(nullable: false),
+                        TenentTo = c.DateTime(nullable: false),
+                        CreatedBy = c.String(),
+                        CreatedAt = c.DateTime(nullable: false),
+                        ModifiedBy = c.String(),
                         ModifiedAt = c.DateTime(nullable: false),
                         Status = c.Int(nullable: false),
                     })
@@ -106,26 +134,6 @@ namespace ApartmentManager.Migrations
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId)
                 .Index(t => t.RoleId);
-            
-            CreateTable(
-                "dbo.Tenents",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        ApartmentId = c.Int(nullable: false),
-                        Name = c.String(nullable: false, maxLength: 100),
-                        NicNo = c.String(maxLength: 20),
-                        PhoneNumber = c.String(),
-                        EmailAddress = c.String(),
-                        TenentFrom = c.DateTime(nullable: false),
-                        TenentTo = c.DateTime(nullable: false),
-                        CreatedBy = c.String(),
-                        CreatedAt = c.DateTime(nullable: false),
-                        ModifiedBy = c.String(),
-                        ModifiedAt = c.DateTime(nullable: false),
-                        Status = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -181,18 +189,26 @@ namespace ApartmentManager.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Apartments", "TenentId", "dbo.Tenents");
+            DropForeignKey("dbo.Apartments", "PropertyId", "dbo.Properties");
+            DropForeignKey("dbo.Apartments", "OwnerId", "dbo.Owners");
+            DropForeignKey("dbo.Apartments", "ApartmentTypeId", "dbo.ApartmentTypes");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.Apartments", new[] { "ApartmentTypeId" });
+            DropIndex("dbo.Apartments", new[] { "TenentId" });
+            DropIndex("dbo.Apartments", new[] { "OwnerId" });
+            DropIndex("dbo.Apartments", new[] { "PropertyId" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
-            DropTable("dbo.Tenents");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Tenents");
             DropTable("dbo.Properties");
             DropTable("dbo.Owners");
             DropTable("dbo.ApartmentTypes");

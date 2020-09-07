@@ -14,12 +14,16 @@ namespace ApartmentManager.Models
         [StringLength(100)]
         public string Name { get; set; }
 
+        [Display(Name = "Square Feets")]
         public int SquareFeets { get; set; }
 
+        [Display(Name = "Monthly Maintenance Charge")]
         public decimal MaintenanceCharge { get; set; }
 
+        [Display(Name = "Num. of Rooms")]
         public int NumRooms { get; set; }
 
+        [Display(Name = "Num. of Bathrooms")]
         public int NumBathRooms { get; set; }
 
         public string CreatedBy { get; set; }

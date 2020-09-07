@@ -37,6 +37,7 @@ namespace WebApplication2.Controllers.Api
         public IEnumerable<ApartmentDto> GetApartments(string query = null)
         {
             var unitsQuery = _context.Apartment
+                .Include(m => m.Owner)
                 .Where(m => m.Status != 4);
 
             return unitsQuery

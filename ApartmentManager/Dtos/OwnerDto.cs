@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
-using ApartmentManager.Models;
 
 namespace ApartmentManager.Dtos
 {
     public class OwnerDto
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
-        [Required(ErrorMessage = "please select apartment")]
-        public int ApartmentId { get; set; }
 
         [Required(ErrorMessage = "please enter name")]
         [StringLength(100)]

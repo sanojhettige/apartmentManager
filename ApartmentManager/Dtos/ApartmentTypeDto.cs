@@ -1,26 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
-using ApartmentManager.Models;
 
 namespace ApartmentManager.Dtos
 {
     public class ApartmentTypeDto
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "please enter name")]
         [StringLength(100)]
         public string Name { get; set; }
 
-        public int SqurareFeets { get; set; }
+        [Required(ErrorMessage = "please enter square feets")]
+        public int SquareFeets { get; set; }
 
+        [Required(ErrorMessage = "please enter maintenance charge")]
         public decimal MaintenanceCharge { get; set; }
 
+        [Required(ErrorMessage = "please select number of rooms")]
         public int NumRooms { get; set; }
 
+        [Required(ErrorMessage = "please select number of bath rooms")]
         public int NumBathRooms { get; set; }
 
         public string CreatedBy { get; set; }

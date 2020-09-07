@@ -8,23 +8,27 @@ namespace ApartmentManager.Models
 
     public partial class Tenent
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
-        public int ApartmentId { get; set; }
 
         [Required]
         [StringLength(100)]
         public string Name { get; set; }
 
+        [Display(Name = "NIC No")]
         [StringLength(20)]
         public string NicNo { get; set; }
 
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
+        [Display(Name = "Email Address")]
         public string EmailAddress { get; set; }
 
+        [Display(Name = "Tenency Start Date")]
         public DateTime TenentFrom { get; set; }
 
+        [Display(Name = "Tenency Closed Date")]
         public DateTime TenentTo { get; set; }
 
         public string CreatedBy { get; set; }

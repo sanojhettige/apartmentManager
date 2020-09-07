@@ -28,11 +28,11 @@ namespace WebApplication2.Controllers.Api
             if (category == null)
                 return NotFound();
 
-            return Ok(Mapper.Map<ApartmentType, CategoryDto>(category));
+            return Ok(Mapper.Map<ApartmentType, ApartmentTypeDto>(category));
         }
 
         //GET /api/category/1
-        public IEnumerable<CategoryDto> GetCategories(string query = null)
+        public IEnumerable<ApartmentTypeDto> GetCategories(string query = null)
         {
             var catQuery = _context.ApartmentType
                 .Where(m => m.Status != 4);
@@ -42,17 +42,17 @@ namespace WebApplication2.Controllers.Api
 
             return catQuery
                 .ToList()
-                .Select(Mapper.Map<ApartmentType, CategoryDto>);
+                .Select(Mapper.Map<ApartmentType, ApartmentTypeDto>);
         }
         // POST /api/category
         [HttpPost]
-        public IHttpActionResult CreateOwner(CategoryDto categoryDto)
+        public IHttpActionResult CreateOwner(ApartmentTypeDto categoryDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
 
-            var category = Mapper.Map<CategoryDto, ApartmentType>(categoryDto);
+            var category = Mapper.Map<ApartmentTypeDto, ApartmentType>(categoryDto);
             _context.ApartmentType.Add(category);
             _context.SaveChanges();
 
