@@ -37,11 +37,14 @@ namespace ApartmentManager.Controllers
         [Authorize(Roles = RoleName.Admin)]
         public ActionResult Create(int Id)
         {
-            var owners = _context.Owner.ToList();
+            //var owners = _context.Owner.ToList();
+            var types = _context.ApartmentType.ToList();
+            var apartment = new Apartment();
+            apartment.PropertyId = Id;
             var viewModel = new ApartmentFormViewModel
             {
-                Apartment = new Apartment(),
-                Owners = owners
+                Apartment = apartment,
+                ApartmentTypes = types
             };
             return View("ApartmentForm", viewModel);
         }
@@ -75,7 +78,6 @@ namespace ApartmentManager.Controllers
             {
                 var selectedApartment = _context.Apartment.Single(m => m.Id == apartment.Id);
                 selectedApartment.PropertyId = apartment.PropertyId;
-                selectedApartment.OwnerId = apartment.OwnerId;
                 selectedApartment.FloorNo = apartment.FloorNo;
                 selectedApartment.UnitNo = apartment.UnitNo;
                 selectedApartment.ModifiedAt = DateTime.Now;
@@ -84,6 +86,9 @@ namespace ApartmentManager.Controllers
             }
 
             _context.SaveChanges();
+
+            if(apartment.PropertyId > 0)
+                return RedirectToAction("index", "Property/Apartments/" + apartment.PropertyId);
 
             return RedirectToAction("index", "Apartment");
         }
@@ -94,10 +99,12 @@ namespace ApartmentManager.Controllers
             var apartment = _context.Apartment.SingleOrDefault(c => c.Id == id);
             if (apartment == null)
                 return HttpNotFound();
+            //var owners = _context.Owner.ToList();
+            var types = _context.ApartmentType.ToList();
             var viewModel = new ApartmentFormViewModel
             {
-                Apartment = apartment
-
+                Apartment = apartment,
+                ApartmentTypes = types
             };
             return View("ApartmentForm", viewModel);
         }

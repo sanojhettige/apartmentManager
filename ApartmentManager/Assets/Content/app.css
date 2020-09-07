@@ -1,10 +1,4 @@
 /*!
- * Start Bootstrap - SB Admin 2 v4.1.1 (https://startbootstrap.com/themes/sb-admin-2)
- * Copyright 2013-2020 Start Bootstrap
- * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-sb-admin-2/blob/master/LICENSE)
- */
-
-/*!
  * Bootstrap v4.5.0 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
  * Copyright 2011-2020 Twitter, Inc.
@@ -10360,11 +10354,9 @@ a:focus {
 .sidebar .nav-item .collapse .collapse-inner .collapse-item,
 .sidebar .nav-item .collapsing .collapse-inner .collapse-item {
   padding: 0.5rem 1rem;
-  margin: 0 0.5rem;
   display: block;
   color: #3a3b45;
   text-decoration: none;
-  border-radius: 0.35rem;
   white-space: nowrap;
 }
 
@@ -10471,7 +10463,6 @@ a:focus {
   }
   .sidebar .nav-item .collapse,
   .sidebar .nav-item .collapsing {
-    margin: 0 1rem;
   }
   .sidebar .nav-item .nav-link {
     display: block;

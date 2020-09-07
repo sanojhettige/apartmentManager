@@ -38,6 +38,7 @@ namespace WebApplication2.Controllers.Api
         {
             var unitsQuery = _context.Apartment
                 .Include(m => m.Owner)
+                .Include(m => m.Tenent)
                 .Where(m => m.Status != 4);
 
             return unitsQuery

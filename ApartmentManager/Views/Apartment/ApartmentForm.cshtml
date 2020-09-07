@@ -8,16 +8,15 @@
 
 @using (Html.BeginForm("Save", "Apartment"))
 {
-<div class="row">
-    <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.Apartment.OwnerId)
-        <div class="input-group">
-            @Html.DropDownListFor(m => m.Apartment.OwnerId, new SelectList(Model.Owners, "Id", "Name"), "Select Owner ", new { @class = "form-control" })
-            <button type="button" class="btn btn-primary">Add</button>
+    <div class="row">
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Apartment.ApartmentTypeId)
+            <div class="input-group">
+                @Html.DropDownListFor(m => m.Apartment.ApartmentTypeId, new SelectList(Model.ApartmentTypes, "Id", "Name"), "Select Type", new { @class = "form-control" })
+            </div>
+            @Html.ValidationMessageFor(m => m.Apartment.ApartmentTypeId)
         </div>
-        @Html.ValidationMessageFor(m => m.Apartment.OwnerId)
     </div>
-</div>
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.Apartment.FloorNo)

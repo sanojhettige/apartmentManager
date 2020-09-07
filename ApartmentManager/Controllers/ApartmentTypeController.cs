@@ -8,23 +8,23 @@ using ApartmentManager.ViewModels;
 
 namespace ApartmentManager.Controllers
 {
-    public class CategoryController : Controller
+    public class ApartmentTypeController : Controller
     {
         private ApplicationDbContext _context;
 
-        public CategoryController()
+        public ApartmentTypeController()
         {
             _context = new ApplicationDbContext();
         }
 
-        // GET: Property/Random 
+        // GET: ApartmentType/Random 
 
         protected override void Dispose(bool disposing)
         {
             _context.Dispose();
         }
 
-        // GET: Category
+        // GET: ApartmentType
         public ActionResult Index()
         {
             if (User.IsInRole(RoleName.Admin))
@@ -33,7 +33,7 @@ namespace ApartmentManager.Controllers
                 return View("../Shared/NoPermission");
         }
 
-        // GET: Create Category
+        // GET: Create ApartmentType
         [Authorize(Roles = RoleName.Admin)]
         public ActionResult Create()
         {
@@ -41,64 +41,64 @@ namespace ApartmentManager.Controllers
             {
                 ApartmentType = new ApartmentType()
             };
-            return View("CategoryForm", viewModel);
+            return View("ApartmentTypeForm", viewModel);
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = RoleName.Admin)]
-        public ActionResult Save(ApartmentType category)
+        public ActionResult Save(ApartmentType apartmentType)
         {
             //Model.State to check validation from the model
             if (!ModelState.IsValid)
             {
                 var viewModel = new ApartmentTypeFormViewModel
                 {
-                    ApartmentType = category
+                    ApartmentType = apartmentType
                 };
 
-                return View("CategoryForm", viewModel);
+                return View("ApartmentTypeForm", viewModel);
             }
-            if (category.Id == 0)
+            if (apartmentType.Id == 0)
             {
-                category.CreatedAt = DateTime.Now;
-                category.ModifiedAt = DateTime.Now;
-                category.CreatedBy = "";
-                category.ModifiedBy = "";
-                _context.ApartmentType.Add(category);
+                apartmentType.CreatedAt = DateTime.Now;
+                apartmentType.ModifiedAt = DateTime.Now;
+                apartmentType.CreatedBy = "";
+                apartmentType.ModifiedBy = "";
+                _context.ApartmentType.Add(apartmentType);
 
             }
             else
             {
-                var selectedCategory = _context.ApartmentType.Single(m => m.Id == category.Id);
-                selectedCategory.Name = category.Name;
-                selectedCategory.SquareFeets = category.SquareFeets;
-                selectedCategory.NumRooms = category.NumRooms;
-                selectedCategory.NumBathRooms = category.NumBathRooms;
-                selectedCategory.MaintenanceCharge = category.MaintenanceCharge;
-                selectedCategory.ModifiedAt = DateTime.Now;
-                selectedCategory.ModifiedBy = "";
+                var selectedType = _context.ApartmentType.Single(m => m.Id == apartmentType.Id);
+                selectedType.Name = apartmentType.Name;
+                selectedType.SquareFeets = apartmentType.SquareFeets;
+                selectedType.NumRooms = apartmentType.NumRooms;
+                selectedType.NumBathRooms = apartmentType.NumBathRooms;
+                selectedType.MaintenanceCharge = apartmentType.MaintenanceCharge;
+                selectedType.ModifiedAt = DateTime.Now;
+                selectedType.ModifiedBy = "";
 
             }
 
             _context.SaveChanges();
 
-            return RedirectToAction("index", "Category");
+            return RedirectToAction("index", "ApartmentType");
         }
 
         [Authorize(Roles = RoleName.Admin)]
         public ActionResult Edit(int id)
         {
-            var category = _context.ApartmentType.SingleOrDefault(c => c.Id == id);
-            if (category == null)
+            var apartmentType = _context.ApartmentType.SingleOrDefault(c => c.Id == id);
+            if (apartmentType == null)
                 return HttpNotFound();
             var viewModel = new ApartmentTypeFormViewModel
             {
-                ApartmentType = category
+                ApartmentType = apartmentType
 
             };
-            return View("CategoryForm", viewModel);
+            return View("ApartmentTypeForm", viewModel);
         }
 
     }

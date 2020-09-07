@@ -24,6 +24,12 @@ namespace ApartmentManager.App_Start
             Mapper.CreateMap<OwnerDto, Owner>();
             Mapper.CreateMap<Tenent, TenentDto>();
             Mapper.CreateMap<TenentDto, Tenent>();
+            Mapper.CreateMap<ActivityDto, Activity>();
+            Mapper.CreateMap<Activity, ActivityDto>();
+            Mapper.CreateMap<SecurityGuardDto, SecurityGuard>();
+            Mapper.CreateMap<SecurityGuard, SecurityGuardDto>();
+            Mapper.CreateMap<MaintenanceInvoiceDto, MaintenanceInvoice>();
+            Mapper.CreateMap<MaintenanceInvoice, MaintenanceInvoiceDto>();
 
 
 

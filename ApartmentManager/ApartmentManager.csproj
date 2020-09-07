@@ -204,37 +204,44 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApartmentController.cs" />
-    <Compile Include="Controllers\Api\CategoryController.cs" />
+    <Compile Include="Controllers\Api\ApartmentTypeController.cs" />
     <Compile Include="Controllers\Api\OwnerController.cs" />
     <Compile Include="Controllers\Api\TenentController.cs" />
-    <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\ApartmentTypeController.cs" />
     <Compile Include="Controllers\OwnerController.cs" />
     <Compile Include="Controllers\PropertyController.cs" />
     <Compile Include="Controllers\Api\PropertyController.cs" />
     <Compile Include="Controllers\Api\ApartmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\TenentController.cs" />
+    <Compile Include="Dtos\ActivityDto.cs" />
     <Compile Include="Dtos\ApartmentTypeDto.cs" />
+    <Compile Include="Dtos\MaintenanceInvoiceDto.cs" />
     <Compile Include="Dtos\PropertyDto.cs" />
     <Compile Include="Dtos\AprtmentDto.cs" />
     <Compile Include="Dtos\OwnerDto.cs" />
+    <Compile Include="Dtos\SecurityGuardDto.cs" />
     <Compile Include="Dtos\TenentDto.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202009070451200_initialCreate.cs" />
-    <Compile Include="Migrations\202009070451200_initialCreate.Designer.cs">
-      <DependentUpon>202009070451200_initialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202009071714397_initialCreate.cs" />
+    <Compile Include="Migrations\202009071714397_initialCreate.Designer.cs">
+      <DependentUpon>202009071714397_initialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Activity.cs" />
+    <Compile Include="Models\MaintenanceInvoice.cs" />
     <Compile Include="Models\Property.cs" />
     <Compile Include="Models\Apartment.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RoleName.cs" />
     <Compile Include="Models\Owner.cs" />
+    <Compile Include="Models\SecurityGuard.cs" />
     <Compile Include="Models\Tenent.cs" />
     <Compile Include="Models\ApartmentType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -243,6 +250,7 @@
     <Compile Include="ViewModels\OwnerFormViewModel.cs" />
     <Compile Include="ViewModels\PropertyFormViewModel.cs" />
     <Compile Include="ViewModels\ApartmentFormViewModel.cs" />
+    <Compile Include="ViewModels\ReportFormViewModel.cs" />
     <Compile Include="ViewModels\TenentFormViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -362,6 +370,8 @@
     <Content Include="Assets\Content\toastr.css" />
     <Content Include="Assets\Content\toastr.min.css" />
     <Content Include="Assets\Content\typeahead.css" />
+    <Content Include="Assets\Scripts\app.min.js" />
+    <Content Include="Assets\Scripts\app.js" />
     <Content Include="Assets\Vendor\bootstrap\js\bootstrap.bundle.js" />
     <Content Include="Assets\Vendor\bootstrap\js\bootstrap.bundle.min.js" />
     <Content Include="Assets\Vendor\bootstrap\js\bootstrap.js" />
@@ -376,6 +386,93 @@
     <Content Include="Assets\Vendor\datatables\dataTables.bootstrap4.min.js" />
     <Content Include="Assets\Vendor\datatables\jquery.dataTables.js" />
     <Content Include="Assets\Vendor\datatables\jquery.dataTables.min.js" />
+    <Content Include="Assets\Vendor\date-picker\bootstrap-datepicker.css" />
+    <Content Include="Assets\Vendor\date-picker\bootstrap-datepicker.js" />
+    <Content Include="Assets\Vendor\date-picker\bootstrap-datepicker.min.css" />
+    <Content Include="Assets\Vendor\date-picker\bootstrap-datepicker.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker-en-CA.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.ar-tn.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.ar.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.az.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.bg.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.bm.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.bn.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.br.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.bs.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.ca.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.cs.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.cy.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.da.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.de.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.el.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.en-AU.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.en-CA.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.en-GB.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.en-IE.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.en-NZ.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.en-ZA.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.eo.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.es.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.et.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.eu.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.fa.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.fi.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.fo.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.fr-CH.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.fr.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.gl.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.he.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.hi.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.hr.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.hu.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.hy.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.id.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.is.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.it-CH.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.it.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.ja.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.ka.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.kh.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.kk.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.km.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.ko.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.kr.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.lt.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.lv.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.me.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.mk.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.mn.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.ms.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.nl-BE.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.nl.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.no.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.oc.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.pl.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.pt-BR.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.pt.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.ro.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.rs-latin.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.rs.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.ru.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.si.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.sk.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.sl.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.sq.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.sr-latin.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.sr.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.sv.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.sw.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.ta.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.tg.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.th.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.tk.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.tr.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.uk.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.uz-cyrl.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.uz-latn.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.vi.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.zh-CN.min.js" />
+    <Content Include="Assets\Vendor\date-picker\locales\bootstrap-datepicker.zh-TW.min.js" />
     <Content Include="Assets\Vendor\fontawesome-free\css\all.css" />
     <Content Include="Assets\Vendor\fontawesome-free\css\all.min.css" />
     <Content Include="Assets\Vendor\fontawesome-free\css\brands.css" />
@@ -2409,9 +2506,10 @@
     <Content Include="Views\Owner\OwnerForm.cshtml" />
     <Content Include="Views\Tenent\index.cshtml" />
     <Content Include="Views\Tenent\TenentForm.cshtml" />
-    <Content Include="Views\Category\index.cshtml" />
-    <Content Include="Views\Category\CategoryForm.cshtml" />
+    <Content Include="Views\ApartmentType\index.cshtml" />
+    <Content Include="Views\ApartmentType\ApartmentTypeForm.cshtml" />
     <Content Include="Views\Apartment\index.cshtml" />
+    <Content Include="Views\Report\DuePayments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2425,6 +2523,7 @@
     <Content Include="Assets\Content\bootstrap.css.map" />
     <Content Include="Assets\Content\bootstrap-theme.min.css.map" />
     <Content Include="Assets\Content\bootstrap-theme.css.map" />
+    <Content Include="Assets\Vendor\date-picker\bootstrap-datepicker.css.map" />
     <None Include="packages.config" />
     <Content Include="Assets\Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Assets\Scripts\jquery-3.3.1.min.map" />
@@ -2436,8 +2535,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202009070451200_initialCreate.resx">
-      <DependentUpon>202009070451200_initialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009071714397_initialCreate.resx">
+      <DependentUpon>202009071714397_initialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

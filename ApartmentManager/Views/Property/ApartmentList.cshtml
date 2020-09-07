@@ -12,6 +12,7 @@
             <th>Floor</th>
             <th>House No</th>
             <th>Owner Name</th>
+            <th>Tenent Name</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -35,12 +36,21 @@
                         data: "unitNo"
                     },
                     {
-                        data: "ownerName"
+                        data: "ownerId",
+                        render: function (data, type, apartment) {
+                            return apartment?.owner ? apartment.owner.name : "";
+                        }
+                    },
+                    {
+                        data: "tenentId",
+                        render: function (data, type, apartment) {
+                            return apartment?.tenent ? apartment.tenent.name : "";
+                        }
                     },
                     {
                         data: "id",
                         render: function (data, type, unit) {
-                            let content = "<a href='/apartment/" + unit.id + "' class='btn btn-success btn-sm'>Edit</a>";
+                            let content = "<a href='/apartment/edit/" + unit.id + "' class='btn btn-success btn-sm'>Edit</a>";
                             content += "<button class='btn btn-danger btn-sm delete' data-apartment-id=" + data + ">Delete</button>";
 
                             return "<div class='btn-group'>" + content + "</div>";

@@ -28,16 +28,17 @@ namespace ApartmentManager.Models
         {
 
         }
-        //public DbSet<Customer> Customers { get; set; } // My domain model
-        //public DbSet<Movie> Movies { get; set; }// My domain models      
-        //public DbSet<MembershipType> MembershipTypes { get; set; }
-        //public DbSet<GenreType> GenreTypes { get; set; }
-        //public DbSet<Rental> Rentals { get; set; }
         public DbSet<Property> Property { get; set; }
         public DbSet<Apartment> Apartment { get; set; }
         public DbSet<Owner> Owner { get; set; }
         public DbSet<Tenent> Tenent { get; set; }
         public DbSet<ApartmentType> ApartmentType { get; set; }
+
+        public DbSet<SecurityGuard> SecurityGuard { get; set; }
+
+        public DbSet<Activity> Activity { get; set; }
+
+        public DbSet<MaintenanceInvoice> MaintenanceInvoice { get; set; }
 
         public static ApplicationDbContext Create()
         {

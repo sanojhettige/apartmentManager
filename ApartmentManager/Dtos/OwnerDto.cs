@@ -24,9 +24,8 @@ namespace ApartmentManager.Dtos
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "please enter email address")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string EmailAddress { get; set; }
-
-        public DateTime OwnerFrom { get; set; }
 
         public string CreatedBy { get; set; }
 

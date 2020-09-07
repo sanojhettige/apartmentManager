@@ -17,21 +17,20 @@ namespace ApartmentManager.Models
         [Display(Name = "Property Name")]
         public int PropertyId { get; set; }
 
+        public ApartmentType ApartmentType { get; set; }
+        [Required]
+        [Display(Name = "Apartment Type")]
+        public int ApartmentTypeId { get; set; }
+
         public Owner Owner { get; set; }
 
         [Display(Name = "Owner Name")]
-        public int OwnerId { get; set; }
+        public int? OwnerId { get; set; }
 
         public Tenent Tenent { get; set; }
 
         [Display(Name = "Tenent Name")]
-        public int TenentId { get; set; }
-
-
-        [Display(Name = "Apartment Type")]
-        public int ApartmentTypeId { get; set; }
-
-        public ApartmentType ApartmentType { get; set; }
+        public int? TenentId { get; set; }
 
         [Display(Name = "Floor No")]
         [Range(1, 999)]

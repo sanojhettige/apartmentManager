@@ -66,7 +66,6 @@ namespace ApartmentManager.Controllers
             {
                 tenent.CreatedAt = DateTime.Now;
                 tenent.ModifiedAt = DateTime.Now;
-                tenent.TenentFrom = DateTime.Now;
                 tenent.CreatedBy = "";
                 tenent.ModifiedBy = "";
                 _context.Tenent.Add(tenent);

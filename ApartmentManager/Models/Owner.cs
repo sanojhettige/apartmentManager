@@ -20,13 +20,13 @@ namespace ApartmentManager.Models
         public string NicNo { get; set; }
 
         [Display(Name = "Phone Number")]
+        [Required]
         public string PhoneNumber { get; set; }
 
         [Display(Name = "Email Address")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [Required]
         public string EmailAddress { get; set; }
-
-        [Display(Name = "Ownership Started Date")]
-        public DateTime OwnerFrom { get; set; }
 
         public string CreatedBy { get; set; }
 

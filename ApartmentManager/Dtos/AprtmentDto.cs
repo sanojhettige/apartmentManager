@@ -17,9 +17,11 @@ namespace ApartmentManager.Dtos
 
         public PropertyDto Property { get; set; }
 
-        [Required(ErrorMessage = "please select owner")]
         public int OwnerId { get; set; }
         public OwnerDto Owner { get; set; }
+
+        public int TenentId { get; set; }
+        public TenentDto Tenent { get; set; }
 
         [Required(ErrorMessage = "please select type")]
         public int ApartmentTypeId { get; set; }

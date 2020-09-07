@@ -1,0 +1,13 @@
+﻿@model ApartmentManager.ViewModels.ApartmentFormViewModel
+
+@{ /**/
+
+    ViewBag.Title = "Due Payments";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+@using (Html.BeginForm("SearchDues", "Report"))
+{
+    @Html.AntiForgeryToken()
+<button type="submit" class="btn btn-primary">Search</button>
+}

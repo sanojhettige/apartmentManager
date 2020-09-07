@@ -64,7 +64,6 @@ namespace ApartmentManager.Controllers
             {
                 owner.CreatedAt = DateTime.Now;
                 owner.ModifiedAt = DateTime.Now;
-                owner.OwnerFrom = DateTime.Now;
                 owner.CreatedBy = "";
                 owner.ModifiedBy = "";
                 _context.Owner.Add(owner);

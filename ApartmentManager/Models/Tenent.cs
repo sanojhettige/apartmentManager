@@ -23,13 +23,8 @@ namespace ApartmentManager.Models
         public string PhoneNumber { get; set; }
 
         [Display(Name = "Email Address")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string EmailAddress { get; set; }
-
-        [Display(Name = "Tenency Start Date")]
-        public DateTime TenentFrom { get; set; }
-
-        [Display(Name = "Tenency Closed Date")]
-        public DateTime TenentTo { get; set; }
 
         public string CreatedBy { get; set; }
 
