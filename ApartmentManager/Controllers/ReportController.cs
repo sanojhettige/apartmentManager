@@ -63,7 +63,6 @@ namespace ApartmentManager.Controllers
             return View("DuePayments", viewModel);
         }
 
-
         // GET: Apartments
 
 
