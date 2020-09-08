@@ -1,8 +1,19 @@
-﻿@model ApartmentManager.Models.Property
+﻿@model ApartmentManager.ViewModels.ApartmentFormViewModel
+
+
 @{ ViewBag.Title = "Apartments";
     Layout = "~/Views/Shared/_Layout.cshtml"; }
-
-<h2>All Apartments</h2>
+@if (@Model.Property.Id > 0)
+{
+    <h2>Apartments of @Model.Property.PropertyName</h2>
+    <p>
+        @Html.ActionLink("New Apartment", "create/" + Model.Property.Id, "apartment", null, new { @class = "btn btn-primary" })
+    </p>
+}
+else
+{
+    <h2>All Apartments</h2>
+}
 
 <table id="apartments" class="table table-bordered table-hover">
     <thead>
@@ -16,12 +27,32 @@
     </thead>
     <tbody></tbody>
 </table>
+
+
+<div class="modal fade" id="assignOwner" tabindex="-1" role="dialog" aria-labelledby="Owner" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="Owner">Assign Owner</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("OwnerAssignForm")
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @section scripts
 {
-    <script>$(document).ready(function () {
+    <script>
+        $(document).ready(function () {
             var table = $("#apartments").DataTable({
                 ajax: {
-                    url: "/api/apartment",
+                    url: "/api/apartment?pId="+@Model.Property.Id,
                     dataSrc: ""
                 },
                 columns: [
@@ -35,19 +66,23 @@
                     {
                         data: "ownerId",
                         render: function (data, type, apartment) {
-                            return apartment?.owner ? apartment.owner.name : "";
+                            const assignBtn1 = '<button type="button" aType="owner" ownerId="' + apartment.ownerId + '" tenentId="' + apartment.tenentId + '" propId = "' + apartment.propertyId + '" aptId = "' + apartment.id + '" data-toggle="modal" data-target="#assignOwner" class="btn btn-sm btn-primary assignOwner" > Assign Now</button > ';
+                            const assignBtn2 = '<a type="button" aType="owner" ownerId="' + apartment.ownerId + '" tenentId="' + apartment.tenentId + '" propId = "' + apartment.propertyId + '" aptId = "' + apartment.id + '" data-toggle="modal" data-target="#assignOwner" class="assignOwner" >' + apartment.owner?.name +'</a > ';
+                            return apartment?.owner ? assignBtn2 : "No Owner Found " + assignBtn1;
                         }
                     },
                     {
                         data: "tenentId",
                         render: function (data, type, apartment) {
-                            return apartment?.tenent ? apartment.tenent.name : "";
+                            const assignBtn1 = '<button type="button" aType="tenent" ownerId="' + apartment.ownerId + '" tenentId="' + apartment.tenentId + '" propId="' + apartment.propertyId + '" aptId="' + apartment.id + '" data-toggle="modal" data-target="#assignOwner" class="btn btn-sm btn-primary assignOwner"> Assign Now</button>';
+                            const assignBtn2 = '<a type="button" aType="tenent" ownerId="' + apartment.ownerId + '" tenentId="' + apartment.tenentId + '" propId="' + apartment.propertyId + '" aptId="' + apartment.id + '" data-toggle="modal" data-target="#assignOwner" class="assignOwner">' + apartment.tenent?.name +'</button> ';
+                            return apartment?.tenent ? assignBtn2 : "No Tenent Found " + assignBtn1;
                         }
                     },
                     {
                         data: "id",
-                        render: function (data, type, apartment) {
-                            let content = "<a href='/apartment/edit/" + apartment.id + "' class='btn btn-success btn-sm'>Edit</a>";
+                        render: function (data, type, unit) {
+                            let content = "<a href='/apartment/edit/" + unit.id + "' class='btn btn-success btn-sm'>Edit</a>";
                             content += "<button class='btn btn-danger btn-sm delete' data-apartment-id=" + data + ">Delete</button>";
 
                             return "<div class='btn-group'>" + content + "</div>";

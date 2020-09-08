@@ -53,8 +53,36 @@
     e.preventDefault();
   });
 
-    $('.datepicker').datepicker({
-        format: "yyyy-mm-dd"
+    if (jQuery().datepicker) {
+        $('.datepicker').datepicker({
+            format: "yyyy-mm-dd"
+        });
+    }
+
+    $(document).on('click', '.assignOwner', function (e) {
+        const id = $(this).attr('aptId');
+        const pid = $(this).attr('propId');
+        const owner = $(this).attr('ownerId');
+        const tenent = $(this).attr('tenentId');
+        const type = $(this).attr('aType');
+
+        if (type == 'Owner') {
+            $(".showTenent").css("display", "none");
+            $(".showOwner").css("display", "block");
+        }
+
+        if (type == 'Tenent') {
+            $(".showTenent").css("display", "block");
+            $(".showOwner").css("display", "none");
+        }
+
+        $("#Apartment_Id").val(id);
+        $("#Apartment_PropertyId").val(pid);
+        if (tenent > 0)
+            $("#Apartment_TenentId").val(tenent);
+
+        if (owner > 0)
+        $("#Apartment_OwnerId").val(owner);
     });
 
 })(jQuery); // End of use strict

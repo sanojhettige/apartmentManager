@@ -2,9 +2,9 @@
 @{ ViewBag.Title = "Apartments";
     Layout = "~/Views/Shared/_Layout.cshtml"; }
 
-<h2>Apartments</h2>
+<h2>Apartments of @Model.PropertyName</h2>
 <p>
-    @Html.ActionLink("New Apartment", "create/1", "apartment", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("New Apartment", "create/" + Model.Id, "apartment", null, new { @class = "btn btn-primary" })
 </p>
 <table id="apartments" class="table table-bordered table-hover">
     <thead>
@@ -18,13 +18,56 @@
     </thead>
     <tbody></tbody>
 </table>
+
+
+<div class="modal fade" id="assignOwner" tabindex="-1" role="dialog" aria-labelledby="Owner" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="Owner">Assign Owner</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("OwnerAssignForm")
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Assign</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="assignTenent" tabindex="-1" role="dialog" aria-labelledby="Tenent" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="Tenent">Assign Tenent</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Assign</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section scripts
 {
     <script>
         $(document).ready(function () {
             var table = $("#apartments").DataTable({
                 ajax: {
-                    url: "/api/apartment",
+                    url: "/api/apartment?pId="+@Model.Id,
                     dataSrc: ""
                 },
                 columns: [
@@ -38,13 +81,15 @@
                     {
                         data: "ownerId",
                         render: function (data, type, apartment) {
-                            return apartment?.owner ? apartment.owner.name : "";
+                            const assignBtn = '<button type="button" data-toggle="modal" data-target="#assignOwner" class="btn btn-sm btn-primary"> Assign Now</button>';
+                            return apartment?.owner ? apartment.owner.name : "No Owner Found " + assignBtn;
                         }
                     },
                     {
                         data: "tenentId",
                         render: function (data, type, apartment) {
-                            return apartment?.tenent ? apartment.tenent.name : "";
+                            const assignBtn = '<button type="button" data-toggle="modal" data-target="#assignTenent" class="btn btn-sm btn-primary"> Assign Now</button>';
+                            return apartment?.tenent ? apartment.tenent.name : "No Tenent Found " + assignBtn;
                         }
                     },
                     {

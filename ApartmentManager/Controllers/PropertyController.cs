@@ -104,18 +104,5 @@ namespace ApartmentManager.Controllers
             return View("PropertyForm", viewModel);
         }
 
-
-        [Authorize(Roles = RoleName.Admin)]
-        public ActionResult Apartments(int id)
-        {
-            var property = _context.Property.SingleOrDefault(c => c.Id == id);
-            //var apartments = _context.Apartment.Where(m => m.Status != 4);
-            if (property == null)
-                return HttpNotFound();
-
-            return View("ApartmentList", property);
-
-        }
-
     }
 }

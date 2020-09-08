@@ -11,6 +11,7 @@ namespace ApartmentManager.ViewModels
         public IEnumerable<Owner> Owners { get; set; }
         public IEnumerable<Tenent> Tenents { get; set; }
         public IEnumerable<ApartmentType> ApartmentTypes { get; set; }
+        public Property Property { get; set; }
         public Apartment Apartment { get; set; }
         public string Title
         {

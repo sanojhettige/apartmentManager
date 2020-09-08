@@ -27,11 +27,84 @@ namespace ApartmentManager.Controllers
         // GET: Apartment
         public ActionResult Index()
         {
+            var property = new Property();
+            var owners = _context.Owner.ToList();
+            var tenents = _context.Tenent.ToList();
+
+            property.PropertyName = "";
+
+            var viewModel = new ApartmentFormViewModel
+            {
+                Property = property,
+                Owners = owners,
+                Tenents = tenents
+            };
+
             if (User.IsInRole(RoleName.Admin))
-                return View();
+                return View("index", viewModel);
             else
                 return View("../Shared/NoPermission");
         }
+
+
+        [Authorize(Roles = RoleName.Admin)]
+        public ActionResult property(int id = 0)
+        {
+            var property = _context.Property.SingleOrDefault(c => c.Id == id);
+            
+            if (property == null)
+                return HttpNotFound();
+            else {
+                var owners = _context.Owner.ToList();
+                var tenents = _context.Tenent.ToList();
+                var viewModel = new ApartmentFormViewModel
+                {
+                    Property = property,
+                    Owners = owners,
+                    Tenents = tenents
+                };
+
+                return View("index", viewModel);
+            }
+            return RedirectToAction("index", "Apartment");
+
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.Admin)]
+        public ActionResult Assign(Apartment apartment)
+        {
+            if (apartment.Id > 0)
+            {
+                var selectedApartment = _context.Apartment.Single(m => m.Id == apartment.Id);
+                
+                if(apartment.OwnerId > 0)
+                {
+                    selectedApartment.OwnerId = apartment.OwnerId;
+                }
+
+                if (apartment.TenentId > 0 && selectedApartment.OwnerId > 0)
+                {
+                    selectedApartment.TenentId = apartment.TenentId;
+
+                    selectedApartment.ModifiedAt = DateTime.Now;
+                    selectedApartment.ModifiedBy = "";
+                    _context.SaveChanges();
+                } else
+                {
+
+                }
+                
+            }
+
+            if (apartment.PropertyId > 0)
+                return RedirectToAction("index", "Apartment/Property/" + apartment.PropertyId);
+
+            return RedirectToAction("index", "Apartment");
+        }
+
 
         // GET: Create Apartment
         [Authorize(Roles = RoleName.Admin)]

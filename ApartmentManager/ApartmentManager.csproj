@@ -208,6 +208,7 @@
     <Compile Include="Controllers\Api\OwnerController.cs" />
     <Compile Include="Controllers\Api\TenentController.cs" />
     <Compile Include="Controllers\ApartmentTypeController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OwnerController.cs" />
     <Compile Include="Controllers\PropertyController.cs" />
     <Compile Include="Controllers\Api\PropertyController.cs" />
@@ -2510,6 +2511,8 @@
     <Content Include="Views\ApartmentType\ApartmentTypeForm.cshtml" />
     <Content Include="Views\Apartment\index.cshtml" />
     <Content Include="Views\Report\DuePayments.cshtml" />
+    <Content Include="Views\Apartment\OwnerAssignForm.cshtml" />
+    <Content Include="Views\Apartment\TenentAssignForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

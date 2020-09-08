@@ -1,0 +1,33 @@
+﻿@model ApartmentManager.ViewModels.ApartmentFormViewModel
+
+
+@using (Html.BeginForm("Assign", "Apartment"))
+{
+    <div class="row">
+        <div class="form-group col-md-12 showOwner">
+            @Html.LabelFor(m => m.Apartment.OwnerId)
+            <div class="input-group">
+                @Html.DropDownListFor(m => m.Apartment.OwnerId, new SelectList(Model.Owners, "Id", "Name"), "Select Owner", new { @class = "form-control" })
+            </div>
+            @Html.ValidationMessageFor(m => m.Apartment.OwnerId)
+        </div>
+
+        <div class="form-group col-md-12 showTenent">
+            @Html.LabelFor(m => m.Apartment.TenentId)
+            <div class="input-group">
+                @Html.DropDownListFor(m => m.Apartment.TenentId, new SelectList(Model.Tenents, "Id", "Name"), "Select Tenent", new { @class = "form-control" })
+            </div>
+            @Html.ValidationMessageFor(m => m.Apartment.TenentId)
+        </div>
+
+    </div>
+                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(m => m.Apartment.Id)
+    @Html.HiddenFor(m => m.Apartment.PropertyId)
+                                                <button type="submit" class="btn btn-primary">Save</button>}
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

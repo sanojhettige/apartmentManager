@@ -33,13 +33,16 @@ namespace WebApplication2.Controllers.Api
             return Ok(Mapper.Map<Apartment, ApartmentDto>(unit));
         }
 
-        //GET /api/apartment/1
+        //GET /api/apartment
         public IEnumerable<ApartmentDto> GetApartments(string query = null)
         {
             var unitsQuery = _context.Apartment
                 .Include(m => m.Owner)
                 .Include(m => m.Tenent)
                 .Where(m => m.Status != 4);
+
+            if (!String.IsNullOrWhiteSpace(query))
+                unitsQuery = unitsQuery.Where(m => m.PropertyId == 2);
 
             return unitsQuery
                 .ToList()

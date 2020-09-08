@@ -42,14 +42,14 @@
                     {
                         data: "numUnits",
                         render: function (data, type, property) {
-                            return "<a href='/property/apartments/" + property.id + "'>" + property.numUnits + "</a>";
+                            return "<a href='/apartment/property/" + property.id + "'>" + property.numUnits + "</a>";
                         }
                     },
                     {
                         data: "id",
                         render: function (data, type, property) {
                             let content = "<a href='/property/edit/" + property.id + "' class='btn btn-success btn-sm'>Edit</a>";
-                            content += "<a href='/property/apartments/" + property.id + "' class='btn btn-info btn-sm'>Apartments</a>";
+                            content += "<a href='/apartment/property/" + property.id + "' class='btn btn-info btn-sm'>Apartments</a>";
                             content += "<button class='btn btn-danger btn-sm delete' data-property-id=" + data + ">Delete</button>";
 
                             return "<div class='btn-group'>"+content+"</div>";
