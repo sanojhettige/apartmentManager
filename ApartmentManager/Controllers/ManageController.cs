@@ -157,7 +157,6 @@ namespace ApartmentManager.Controllers
 
             return View("CreateUser", viewModel);
         }
-        
 
         // POST: /Account/Register
         [HttpPost]
