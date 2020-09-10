@@ -20,7 +20,7 @@ namespace WebApplication2.Controllers.Api
         {
             _context = new ApplicationDbContext();
         }
-        //GET /api/owner
+        //GET /api/owner/1
         public IHttpActionResult GetOwner(int id)
         {
             var owner = _context.Owner.SingleOrDefault(c => c.Id == id);
@@ -31,7 +31,7 @@ namespace WebApplication2.Controllers.Api
             return Ok(Mapper.Map<Owner, OwnerDto>(owner));
         }
 
-        //GET /api/owner/1
+        //GET /api/owner
         public IEnumerable<OwnerDto> GetOwners(string query = null)
         {
             var ownerQuery = _context.Owner

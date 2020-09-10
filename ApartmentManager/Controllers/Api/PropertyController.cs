@@ -20,7 +20,7 @@ namespace WebApplication2.Controllers.Api
         {
             _context = new ApplicationDbContext();
         }
-        //GET /api/property
+        //GET /api/property/1
         public IHttpActionResult GetProperty(int id)
         {
             var property = _context.Property.SingleOrDefault(c => c.Id == id);
@@ -31,7 +31,7 @@ namespace WebApplication2.Controllers.Api
             return Ok(Mapper.Map<Property, PropertyDto>(property));
         }
 
-        //GET /api/property/1
+        //GET /api/property
         public IEnumerable<PropertyDto> GetProperties(string query = null)
         {
             var propertyQuery = _context.Property
@@ -44,7 +44,7 @@ namespace WebApplication2.Controllers.Api
                 .ToList()
                 .Select(Mapper.Map<Property, PropertyDto>);
         }
-        // POST /api/properties
+        // POST /api/property
         [HttpPost]
         public IHttpActionResult CreateProperty(PropertyDto propertyDto)
         {
@@ -61,7 +61,7 @@ namespace WebApplication2.Controllers.Api
             //use 
             return Created(new Uri(Request.RequestUri + "/" + property.Id), propertyDto);
         }
-        // PUT /api/properties/1
+        // PUT /api/property/1
         [HttpPut]
         public void UpdateProperty(int id, PropertyDto propertyDto)
         {
@@ -77,7 +77,7 @@ namespace WebApplication2.Controllers.Api
 
             _context.SaveChanges();
         }
-        //DELETE api/properties/1
+        //DELETE api/property/1
         [HttpDelete]
         public void DeleteProperty(int id)
         {

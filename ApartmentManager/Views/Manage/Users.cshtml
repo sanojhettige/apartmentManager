@@ -1,0 +1,73 @@
+﻿@model ApartmentManager.ViewModels.ApartmentFormViewModel
+
+
+@{ ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+    <h2>Users</h2>
+
+<table id="users" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $("#users").DataTable({
+                ajax: {
+                    url: "/api/user",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name"
+                    },
+
+                    {
+                        data: "email"
+                    },
+                    {
+                        data: "phoneNumber"
+                    },
+                    {
+                        data: "role"
+                    },
+                    {
+                        data: "id",
+                        render: function (data, type, unit) {
+                            let content = "<a href='/Manage/UpdateUser/" + unit.id + "' class='btn btn-success btn-sm'>Edit</a>";
+                            content += "<button class='btn btn-danger btn-sm delete' data-us-erid=" + data + ">Delete</button>";
+
+                            return "<div class='btn-group'>" + content + "</div>";
+                        }
+                    }
+                ]
+            });
+
+            $("#users").on("click", ".delete", function () {
+                var button = $(this).attr("data-user-id");
+                if (confirm("are you sure you want to delete the user?")) {
+                    $.ajax({
+                        url: "/api/user/" + button,
+                        method: "DELETE",
+                        Successs: function () {
+
+                            table.row(buttons.parents("tr")).remove().draw();
+
+
+                        }
+                    })
+                }
+            })
+        })</script>
+}

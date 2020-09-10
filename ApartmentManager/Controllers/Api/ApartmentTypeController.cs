@@ -20,7 +20,7 @@ namespace WebApplication2.Controllers.Api
         {
             _context = new ApplicationDbContext();
         }
-        //GET /api/apartmentType
+        //GET /api/apartmentType/1
         public IHttpActionResult GetApartmentType(int id)
         {
             var apartmentType = _context.ApartmentType.SingleOrDefault(c => c.Id == id);
@@ -31,7 +31,7 @@ namespace WebApplication2.Controllers.Api
             return Ok(Mapper.Map<ApartmentType, ApartmentTypeDto>(apartmentType));
         }
 
-        //GET /api/apartmentType/1
+        //GET /api/apartmentType
         public IEnumerable<ApartmentTypeDto> GetApartmentTypes(string query = null)
         {
             var aptQuery = _context.ApartmentType

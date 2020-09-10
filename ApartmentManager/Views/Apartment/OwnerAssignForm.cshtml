@@ -9,7 +9,7 @@
             <div class="input-group">
                 @Html.DropDownListFor(m => m.Apartment.OwnerId, new SelectList(Model.Owners, "Id", "Name"), "Select Owner", new { @class = "form-control" })
             </div>
-            @Html.ValidationMessageFor(m => m.Apartment.OwnerId)
+            @Html.ValidationMessageFor(m => m.Apartment.OwnerId, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group col-md-12 showTenent">
@@ -17,7 +17,7 @@
             <div class="input-group">
                 @Html.DropDownListFor(m => m.Apartment.TenentId, new SelectList(Model.Tenents, "Id", "Name"), "Select Tenent", new { @class = "form-control" })
             </div>
-            @Html.ValidationMessageFor(m => m.Apartment.TenentId)
+            @Html.ValidationMessageFor(m => m.Apartment.TenentId, "", new { @class = "text-danger" })
         </div>
 
     </div>

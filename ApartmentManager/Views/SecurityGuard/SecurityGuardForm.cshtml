@@ -1,0 +1,49 @@
+﻿@model ApartmentManager.ViewModels.SecurityGuardFormViewModel
+
+@{ /**/
+
+    ViewBag.Title = "Create Security Guard";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+@using (Html.BeginForm("Save", "SecurityGuard"))
+{
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.SecurityGuard.PropertyId)
+        <div class="input-group">
+            @Html.DropDownListFor(m => m.SecurityGuard.PropertyId, new SelectList(Model.Properties, "Id", "PropertyName"), "Select Property", new { @class = "form-control" })
+        </div>
+        @Html.ValidationMessageFor(m => m.SecurityGuard.PropertyId)
+    </div>
+
+    <div class="form-group col-md-6">
+                        @Html.LabelFor(m => m.SecurityGuard.Name)
+                        @Html.TextBoxFor(m => m.SecurityGuard.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.SecurityGuard.Name)
+                    </div>
+</div>
+<div class="row">
+
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.SecurityGuard.NicNo)
+        @Html.TextBoxFor(m => m.SecurityGuard.NicNo, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.SecurityGuard.NicNo)
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.SecurityGuard.PhoneNumber)
+        @Html.TextBoxFor(m => m.SecurityGuard.PhoneNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.SecurityGuard.PhoneNumber)
+    </div>
+</div>
+                                @Html.HiddenFor(m => m.SecurityGuard.Id)
+                                                                @Html.AntiForgeryToken()
+                                                                                <button type="submit" class="btn btn-primary">Save</button>}
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

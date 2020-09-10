@@ -14,20 +14,20 @@
             <div class="input-group">
                 @Html.DropDownListFor(m => m.Apartment.ApartmentTypeId, new SelectList(Model.ApartmentTypes, "Id", "Name"), "Select Type", new { @class = "form-control" })
             </div>
-            @Html.ValidationMessageFor(m => m.Apartment.ApartmentTypeId)
+            @Html.ValidationMessageFor(m => m.Apartment.ApartmentTypeId, "", new { @class = "text-danger" })
         </div>
     </div>
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.Apartment.FloorNo)
         @Html.TextBoxFor(m => m.Apartment.FloorNo, new { @class = "form-control", type = "number" })
-        @Html.ValidationMessageFor(m => m.Apartment.FloorNo)
+        @Html.ValidationMessageFor(m => m.Apartment.FloorNo, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.Apartment.UnitNo)
         @Html.TextBoxFor(m => m.Apartment.UnitNo, new { @class = "form-control", type = "number" })
-        @Html.ValidationMessageFor(m => m.Apartment.UnitNo)
+        @Html.ValidationMessageFor(m => m.Apartment.UnitNo, "", new { @class = "text-danger" })
     </div>
 </div>
     @Html.HiddenFor(m => m.Apartment.Id)

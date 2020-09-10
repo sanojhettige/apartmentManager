@@ -12,46 +12,45 @@ using ApartmentManager.Models;
 
 namespace WebApplication2.Controllers.Api
 {
-    public class ApartmentController : ApiController
+    public class SecurityGuardController : ApiController
     {
         private ApplicationDbContext _context;
 
-        public ApartmentController()
+        public SecurityGuardController()
         {
             _context = new ApplicationDbContext();
         }
- 
 
-        //GET /api/apartment/1
-        public IHttpActionResult GetApartment(int id)
+
+        //GET /api/securityGuard/1
+        public IHttpActionResult GetSecurityGuard(int id)
         {
-            var unit = _context.Apartment.SingleOrDefault(c => c.Id == id);
+            var guard = _context.SecurityGuard.SingleOrDefault(c => c.Id == id);
 
-            if (unit == null)
+            if (guard == null)
                 return NotFound();
 
-            return Ok(Mapper.Map<Apartment, ApartmentDto>(unit));
+            return Ok(Mapper.Map<SecurityGuard, SecurityGuardDto>(guard));
         }
 
-        //GET /api/apartment
-        public IEnumerable<ApartmentDto> GetApartments(string query = null)
+        //GET /api/securityGuard
+        public IEnumerable<SecurityGuardDto> GetsScurityGuard(string query = null)
         {
-            var unitsQuery = _context.Apartment
-                .Include(m => m.Owner)
-                .Include(m => m.Tenent)
+            var guardQuery = _context.SecurityGuard
+                .Include(m => m.Property)
                 .Where(m => m.Status != 4);
 
             if (!String.IsNullOrWhiteSpace(query))
-                unitsQuery = unitsQuery.Where(m => m.PropertyId == 2);
+                guardQuery = guardQuery.Where(m => m.PropertyId == 2);
 
-            return unitsQuery
+            return guardQuery
                 .ToList()
-                .Select(Mapper.Map<Apartment, ApartmentDto>);
+                .Select(Mapper.Map<SecurityGuard, SecurityGuardDto>);
         }
 
-        // POST /api/apartment
+        // POST /api/securityGuard
         [HttpPost]
-        public IHttpActionResult CreateApartment(ApartmentDto apartmentDto)
+        public IHttpActionResult CreateSecurityGuard(ApartmentDto apartmentDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
@@ -66,32 +65,32 @@ namespace WebApplication2.Controllers.Api
             //use 
             return Created(new Uri(Request.RequestUri + "/" + unit.Id), apartmentDto);
         }
-        // PUT /api/apartment/1
+        // PUT /api/securityGuard/1
         [HttpPut]
-        public void UpdateApartment(int id, ApartmentDto apartmentDto)
+        public void UpdateSecurityGuard(int id, SecurityGuardDto securityGuardDto)
         {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-            var selectedApartment = _context.Apartment.SingleOrDefault(c => c.Id == id);
+            var selectedGuard = _context.SecurityGuard.SingleOrDefault(c => c.Id == id);
 
-            if (selectedApartment == null)
+            if (selectedGuard == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            Mapper.Map(apartmentDto, selectedApartment);
+            Mapper.Map(securityGuardDto, selectedGuard);
 
             _context.SaveChanges();
         }
-        //DELETE api/apartment/1
+        //DELETE api/securityGuard/1
         [HttpDelete]
-        public void DeleteApartment(int id)
+        public void DeleteSecurityGuard(int id)
         {
-            var selectedApartment = _context.Apartment.SingleOrDefault(c => c.Id == id);
+            var selectedGuard = _context.SecurityGuard.SingleOrDefault(c => c.Id == id);
 
-            if (selectedApartment == null)
+            if (selectedGuard == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            _context.Apartment.Remove(selectedApartment);
+            _context.SecurityGuard.Remove(selectedGuard);
             _context.SaveChanges();
 
         }

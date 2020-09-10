@@ -206,8 +206,11 @@
     <Compile Include="Controllers\ApartmentController.cs" />
     <Compile Include="Controllers\Api\ApartmentTypeController.cs" />
     <Compile Include="Controllers\Api\OwnerController.cs" />
+    <Compile Include="Controllers\Api\SecurityGuardController.cs" />
     <Compile Include="Controllers\Api\TenentController.cs" />
     <Compile Include="Controllers\ApartmentTypeController.cs" />
+    <Compile Include="Controllers\Api\UserController.cs" />
+    <Compile Include="Controllers\CronController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OwnerController.cs" />
     <Compile Include="Controllers\PropertyController.cs" />
@@ -215,6 +218,7 @@
     <Compile Include="Controllers\Api\ApartmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\SecurityGuardController.cs" />
     <Compile Include="Controllers\TenentController.cs" />
     <Compile Include="Dtos\ActivityDto.cs" />
     <Compile Include="Dtos\ApartmentTypeDto.cs" />
@@ -231,6 +235,10 @@
     <Compile Include="Migrations\202009071714397_initialCreate.cs" />
     <Compile Include="Migrations\202009071714397_initialCreate.Designer.cs">
       <DependentUpon>202009071714397_initialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009101524027_userUpdates.cs" />
+    <Compile Include="Migrations\202009101524027_userUpdates.Designer.cs">
+      <DependentUpon>202009101524027_userUpdates.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -252,6 +260,7 @@
     <Compile Include="ViewModels\PropertyFormViewModel.cs" />
     <Compile Include="ViewModels\ApartmentFormViewModel.cs" />
     <Compile Include="ViewModels\ReportFormViewModel.cs" />
+    <Compile Include="ViewModels\SecurityGuardFormViewModel.cs" />
     <Compile Include="ViewModels\TenentFormViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2458,24 +2467,14 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Customer\CustomerList.cshtml" />
@@ -2513,9 +2512,16 @@
     <Content Include="Views\Report\DuePayments.cshtml" />
     <Content Include="Views\Apartment\OwnerAssignForm.cshtml" />
     <Content Include="Views\Apartment\TenentAssignForm.cshtml" />
+    <Content Include="Views\SecurityGuard\SecurityGuardForm.cshtml" />
+    <Content Include="Views\SecurityGuard\index.cshtml" />
+    <Content Include="Views\Manage\Users.cshtml" />
+    <Content Include="Views\Manage\CreateUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Cron\" />
+    <Folder Include="Views\Securities\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\fonts\glyphicons-halflings-regular.woff2" />
@@ -2540,6 +2546,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202009071714397_initialCreate.resx">
       <DependentUpon>202009071714397_initialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009101524027_userUpdates.resx">
+      <DependentUpon>202009101524027_userUpdates.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

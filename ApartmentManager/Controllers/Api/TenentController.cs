@@ -20,7 +20,7 @@ namespace WebApplication2.Controllers.Api
         {
             _context = new ApplicationDbContext();
         }
-        //GET /api/tenent
+        //GET /api/tenent/1
         public IHttpActionResult GetTenent(int id)
         {
             var tenent = _context.Tenent.SingleOrDefault(c => c.Id == id);
@@ -31,7 +31,7 @@ namespace WebApplication2.Controllers.Api
             return Ok(Mapper.Map<Tenent, TenentDto>(tenent));
         }
 
-        //GET /api/tenent/1
+        //GET /api/tenent
         public IEnumerable<TenentDto> GetTenents(string query = null)
         {
             var tenentQuery = _context.Tenent

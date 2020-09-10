@@ -64,7 +64,11 @@ namespace ApartmentManager.Controllers
         }
 
         // GET: Apartments
-
+        [Authorize(Roles = RoleName.Admin)]
+        public ActionResult Apartments()
+        {
+            return View();
+        }
 
         // GET: Owners
 

@@ -12,12 +12,12 @@
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.ApartmentType.Name)
         @Html.TextBoxFor(m => m.ApartmentType.Name, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.ApartmentType.Name)
+        @Html.ValidationMessageFor(m => m.ApartmentType.Name, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.ApartmentType.SquareFeets)
         @Html.TextBoxFor(m => m.ApartmentType.SquareFeets, new { @class = "form-control", type="number" })
-        @Html.ValidationMessageFor(m => m.ApartmentType.SquareFeets)
+        @Html.ValidationMessageFor(m => m.ApartmentType.SquareFeets, "", new { @class = "text-danger" })
     </div>
 
 
@@ -26,20 +26,20 @@
                     <div class="form-group col-md-6">
                         @Html.LabelFor(m => m.ApartmentType.NumRooms)
                         @Html.TextBoxFor(m => m.ApartmentType.NumRooms, new { @class = "form-control", type="number" })
-                        @Html.ValidationMessageFor(m => m.ApartmentType.NumRooms)
+                        @Html.ValidationMessageFor(m => m.ApartmentType.NumRooms, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group col-md-6">
                         @Html.LabelFor(m => m.ApartmentType.NumBathRooms)
                         @Html.TextBoxFor(m => m.ApartmentType.NumBathRooms, new { @class = "form-control", type="number" })
-                        @Html.ValidationMessageFor(m => m.ApartmentType.NumBathRooms)
+                        @Html.ValidationMessageFor(m => m.ApartmentType.NumBathRooms, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6">
                         @Html.LabelFor(m => m.ApartmentType.MaintenanceCharge)
                         @Html.TextBoxFor(m => m.ApartmentType.MaintenanceCharge, new { @class = "form-control", type = "number" })
-                        @Html.ValidationMessageFor(m => m.ApartmentType.MaintenanceCharge)
+                        @Html.ValidationMessageFor(m => m.ApartmentType.MaintenanceCharge, "", new { @class = "text-danger" })
                     </div>
                 </div>
 

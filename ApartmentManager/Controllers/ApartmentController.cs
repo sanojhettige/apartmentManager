@@ -161,7 +161,7 @@ namespace ApartmentManager.Controllers
             _context.SaveChanges();
 
             if(apartment.PropertyId > 0)
-                return RedirectToAction("index", "Property/Apartments/" + apartment.PropertyId);
+                return RedirectToAction("index", "Apartment/Property/" + apartment.PropertyId);
 
             return RedirectToAction("index", "Apartment");
         }

@@ -1,0 +1,78 @@
+﻿@model ApartmentManager.ViewModels.ApartmentFormViewModel
+
+
+@{ ViewBag.Title = "Security Guards";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<h2>Security Guards</h2>
+@Html.ActionLink("New Guard", "create" , "SecurityGuard", null, new { @class = "btn btn-primary" })
+
+<table id="guards" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>NIC No</th>
+            <th>Property</th>
+            <th>Phone Number</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $("#guards").DataTable({
+                ajax: {
+                    url: "/api/securityGuard",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name"
+                    },
+
+                    {
+                        data: "nicNo"
+                    },
+                    {
+                        data: "propertyId",
+                        render: function (data, type, guard) {
+                            return guard?.property ? guard.property?.propertyName : "No Property Found ";
+                        }
+                    },
+                    {
+                        data: "phoneNumber"
+                    },
+                    {
+                        data: "id",
+                        render: function (data, type, guard) {
+                            let content = "<a href='/SecurityGuard/edit/" + guard.id + "' class='btn btn-success btn-sm'>Edit</a>";
+                            content += "<button class='btn btn-danger btn-sm delete' data-guard-id=" + data + ">Delete</button>";
+
+                            return "<div class='btn-group'>" + content + "</div>";
+                        }
+                    }
+                ]
+            });
+
+            $("#guards").on("click", ".delete", function () {
+                var button = $(this).attr("data-apartment-id");
+                if (confirm("are you sure you want to delete the guard?")) {
+                    $.ajax({
+                        url: "/api/securityGuard/" + button,
+                        method: "DELETE",
+                        Successs: function () {
+
+                            table.row(buttons.parents("tr")).remove().draw();
+
+
+                        }
+                    })
+                }
+            })
+        })</script>
+}

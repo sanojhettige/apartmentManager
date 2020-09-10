@@ -74,3 +74,4 @@ D:\Sanoj\apartmentManager\ApartmentManager\obj\Debug\ApartmentManager.csproj.Cop
 D:\Sanoj\apartmentManager\ApartmentManager\obj\Debug\ApartmentManager.dll
 D:\Sanoj\apartmentManager\ApartmentManager\obj\Debug\ApartmentManager.pdb
 D:\Sanoj\apartmentManager\ApartmentManager\obj\Debug\ApartmentManager.csprojAssemblyReference.cache
+D:\Sanoj\apartmentManager\ApartmentManager\obj\Debug\ApartmentManager.Migrations.userUpdates.resources

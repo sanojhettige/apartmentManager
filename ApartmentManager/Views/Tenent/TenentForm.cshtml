@@ -16,12 +16,12 @@
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.Tenent.Name)
         @Html.TextBoxFor(m => m.Tenent.Name, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Tenent.Name)
+        @Html.ValidationMessageFor(m => m.Tenent.Name, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.Tenent.NicNo)
         @Html.TextBoxFor(m => m.Tenent.NicNo, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Tenent.NicNo)
+        @Html.ValidationMessageFor(m => m.Tenent.NicNo, "", new { @class = "text-danger" })
     </div>
 
 
@@ -30,13 +30,13 @@
                     <div class="form-group col-md-6">
                         @Html.LabelFor(m => m.Tenent.EmailAddress)
                         @Html.TextBoxFor(m => m.Tenent.EmailAddress, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Tenent.EmailAddress)
+                        @Html.ValidationMessageFor(m => m.Tenent.EmailAddress, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group col-md-6">
                         @Html.LabelFor(m => m.Tenent.PhoneNumber)
                         @Html.TextBoxFor(m => m.Tenent.PhoneNumber, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Tenent.PhoneNumber)
+                        @Html.ValidationMessageFor(m => m.Tenent.PhoneNumber, "", new { @class = "text-danger" })
                     </div>
                 </div>
 

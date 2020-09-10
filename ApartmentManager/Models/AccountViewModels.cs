@@ -69,10 +69,22 @@ namespace ApartmentManager.Models
 
     public class RegisterViewModel
     {
+        public string Id { get; set; }
+        [Required]
+        [Display(Name = "Name")]
+        [StringLength(150)]
+        public string Name { get; set; }
+
         [Required]
         [Display(Name = "Phone")]
         [StringLength(15)]
         public string PhoneNumber { get; set; }
+
+        [Display(Name = "User Role")]
+        public string RoleId { get; set; }
+
+        [Display(Name = "Property Name")]
+        public int PropertyId { get; set; }
 
         [Required]
         [EmailAddress]
