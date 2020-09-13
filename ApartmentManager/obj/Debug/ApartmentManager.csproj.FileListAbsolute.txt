@@ -67,11 +67,10 @@ D:\Sanoj\apartmentManager\ApartmentManager\bin\Microsoft.Owin.Security.Microsoft
 D:\Sanoj\apartmentManager\ApartmentManager\bin\Microsoft.Owin.Security.OAuth.xml
 D:\Sanoj\apartmentManager\ApartmentManager\bin\System.Diagnostics.DiagnosticSource.xml
 D:\Sanoj\apartmentManager\ApartmentManager\bin\Microsoft.AspNet.TelemetryCorrelation.xml
-D:\Sanoj\apartmentManager\ApartmentManager\obj\Debug\ApartmentManager.Migrations.initialCreate.resources
-D:\Sanoj\apartmentManager\ApartmentManager\obj\Debug\ApartmentManager.csproj.GenerateResource.cache
 D:\Sanoj\apartmentManager\ApartmentManager\obj\Debug\ApartmentManager.csproj.CoreCompileInputs.cache
 D:\Sanoj\apartmentManager\ApartmentManager\obj\Debug\ApartmentManager.csproj.CopyComplete
 D:\Sanoj\apartmentManager\ApartmentManager\obj\Debug\ApartmentManager.dll
 D:\Sanoj\apartmentManager\ApartmentManager\obj\Debug\ApartmentManager.pdb
 D:\Sanoj\apartmentManager\ApartmentManager\obj\Debug\ApartmentManager.csprojAssemblyReference.cache
-D:\Sanoj\apartmentManager\ApartmentManager\obj\Debug\ApartmentManager.Migrations.userUpdates.resources
+D:\Sanoj\apartmentManager\ApartmentManager\obj\Debug\ApartmentManager.Migrations.initialCreate.resources
+D:\Sanoj\apartmentManager\ApartmentManager\obj\Debug\ApartmentManager.csproj.GenerateResource.cache

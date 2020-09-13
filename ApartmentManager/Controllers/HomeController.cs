@@ -19,6 +19,13 @@ namespace ApartmentManager.Controllers
 
         public ActionResult Index()
         {
+            var propTotal = _context.Property.Count();
+            var aptTotal = _context.Apartment.Count();
+            var owners = _context.Owner.Count();
+            var tenents = _context.Tenent.Count();
+            ViewData["propTotal"] = propTotal;
+
+
             if (User.IsInRole("Admin"))
                 return View();
             else

@@ -38,11 +38,13 @@ namespace ApartmentManager.Controllers
         {
             var owners = _context.Owner.ToList();
             var apartments = _context.Apartment.ToList();
+            var properties = _context.Property.ToList();
             
             var viewModel = new ReportFormViewModel
             {
                 Apartments = apartments,
-                Owners = owners
+                Owners = owners,
+                Properties = properties
             };
             return View("DuePayments", viewModel);
         }

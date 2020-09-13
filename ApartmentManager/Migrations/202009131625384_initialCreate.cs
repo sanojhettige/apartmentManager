@@ -193,6 +193,8 @@ namespace ApartmentManager.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
+                        PropertyId = c.Int(),
+                        Name = c.String(),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),

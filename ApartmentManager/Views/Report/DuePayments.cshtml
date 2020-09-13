@@ -1,4 +1,4 @@
-﻿@model ApartmentManager.ViewModels.ApartmentFormViewModel
+﻿@model ApartmentManager.ViewModels.ReportFormViewModel
 
 @{ /**/
 
@@ -8,6 +8,87 @@
 
 @using (Html.BeginForm("SearchDues", "Report"))
 {
-    @Html.AntiForgeryToken()
-<button type="submit" class="btn btn-primary">Search</button>
+
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(m => m.PropertyId)
+            <div class="input-group">
+                @Html.DropDownListFor(m => m.PropertyId, new SelectList(Model.Properties, "Id", "propertyName"), "Select Property", new { @class = "form-control" })
+            </div>
+            @Html.ValidationMessageFor(m => m.PropertyId)
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(m => m.ApartmentId)
+            <div class="input-group">
+                @Html.DropDownListFor(m => m.ApartmentId, new SelectList(Model.Apartments, "Id", "UnitNo"), "Select Apartment", new { @class = "form-control" })
+            </div>
+            @Html.ValidationMessageFor(m => m.ApartmentId)
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(m => m.OwnerId)
+            <div class="input-group">
+                @Html.DropDownListFor(m => m.OwnerId, new SelectList(Model.Owners, "Id", "Name"), "Select Owner", new { @class = "form-control" })
+            </div>
+            @Html.ValidationMessageFor(m => m.OwnerId)
+        </div>
+    </div>
+
+
+                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-primary">Search</button>}
+
+
+
+
+
+<table id="dues" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Property Name</th>
+            <th>Unit No</th>
+            <th>Owner Name</th>
+            <th>Total Due</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts
+{
+    <script>$(document).ready(function () {
+            var table = $("#dues").DataTable({
+                ajax: {
+                    url: "/api/dues",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "propertyName"
+                    },
+
+                    {
+                        data: "unitNo"
+                    },
+                    {
+                        data: "owner.name",
+                    },
+                    {
+                        data: "due",
+                    },
+                    {
+                        data: "id",
+                        render: function (data, type, owner) {
+                            let content = "<a href='/owner/edit/" + owner.id + "' class='btn btn-success btn-sm'>Edit</a>";
+                            content += "<button class='btn btn-danger btn-sm delete' data-owner-id=" + data + ">Delete</button>";
+
+                            return "<div class='btn-group'>"+content+"</div>";
+                        }
+                    }
+                ]
+            });
+
+       
+        })</script>
 }
+
+

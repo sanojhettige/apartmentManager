@@ -232,13 +232,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202009071714397_initialCreate.cs" />
-    <Compile Include="Migrations\202009071714397_initialCreate.Designer.cs">
-      <DependentUpon>202009071714397_initialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202009101524027_userUpdates.cs" />
-    <Compile Include="Migrations\202009101524027_userUpdates.Designer.cs">
-      <DependentUpon>202009101524027_userUpdates.cs</DependentUpon>
+    <Compile Include="Migrations\202009131625384_initialCreate.cs" />
+    <Compile Include="Migrations\202009131625384_initialCreate.Designer.cs">
+      <DependentUpon>202009131625384_initialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -2544,11 +2540,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202009071714397_initialCreate.resx">
-      <DependentUpon>202009071714397_initialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009101524027_userUpdates.resx">
-      <DependentUpon>202009101524027_userUpdates.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009131625384_initialCreate.resx">
+      <DependentUpon>202009131625384_initialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
