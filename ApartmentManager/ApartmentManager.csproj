@@ -205,6 +205,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApartmentController.cs" />
     <Compile Include="Controllers\Api\ApartmentTypeController.cs" />
+    <Compile Include="Controllers\Api\DuePaymentController.cs" />
     <Compile Include="Controllers\Api\OwnerController.cs" />
     <Compile Include="Controllers\Api\SecurityGuardController.cs" />
     <Compile Include="Controllers\Api\TenentController.cs" />
@@ -376,6 +377,7 @@
     <Content Include="Assets\Content\toastr.css" />
     <Content Include="Assets\Content\toastr.min.css" />
     <Content Include="Assets\Content\typeahead.css" />
+    <Content Include="Assets\Img\auth_bg.jpg" />
     <Content Include="Assets\Scripts\app.min.js" />
     <Content Include="Assets\Scripts\app.js" />
     <Content Include="Assets\Vendor\bootstrap\js\bootstrap.bundle.js" />
@@ -2473,12 +2475,6 @@
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Customer\CustomerList.cshtml" />
-    <Content Include="Views\Customer\CustomerForm.cshtml" />
-    <Content Include="Views\Customer\CustomerDetails.cshtml" />
-    <Content Include="Views\Movie\List.cshtml" />
-    <Content Include="Views\Movie\MovieForm.cshtml" />
-    <Content Include="Views\Movie\MovieDetails.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
     <Content Include="Assets\Scripts\umd\popper.min.js.map" />
     <Content Include="Assets\Scripts\umd\popper.js.map" />
@@ -2490,8 +2486,6 @@
     <Content Include="Assets\Scripts\popper.js.map" />
     <Content Include="Assets\Scripts\popper-utils.min.js.map" />
     <Content Include="Assets\Scripts\popper-utils.js.map" />
-    <Content Include="Views\Movie\ReadOnlyList.cshtml" />
-    <Content Include="Views\Rentals\New.cshtml" />
     <Content Include="Views\Shared\_AuthLayout.cshtml" />
     <Content Include="Views\Shared\_SideBar.cshtml" />
     <Content Include="Views\Property\index.cshtml" />
@@ -2516,6 +2510,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Cron\" />
+    <Folder Include="Views\DuePayment\" />
     <Folder Include="Views\Securities\" />
     <Folder Include="Views\User\" />
   </ItemGroup>

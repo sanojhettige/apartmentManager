@@ -15,26 +15,27 @@ using ApartmentManager.Models;
 
 namespace WebApplication2.Controllers.Api
 {
-    public class UserController : ApiController
+    public class DuePaymentController : ApiController
     {
         private ApplicationDbContext _context;
 
-        public UserController()
+        public DuePaymentController()
         {
             _context = new ApplicationDbContext();
         }
 
-        //GET /api/user
-        public IEnumerable<ApplicationUser> GetUser(string query = null)
+        //GET /api/duePayment
+        public IEnumerable<MaintenanceInvoiceDto> GetDuePayment(string query = null)
         {
-            //return _context.Users
-            // .Where(m => m.Id != "4").ToList();
 
-            return _context.Users
-                .Include(u => u.Roles)
-                //.Include(p => p.PropertyId)
-                .ToList();
-  
+            var dueQuery = _context.MaintenanceInvoice
+                .Include(p => p.Apartment)
+                .Where(m => m.Status == 1);
+
+            return dueQuery
+                .ToList()
+                .Select(Mapper.Map<MaintenanceInvoice, MaintenanceInvoiceDto>);
+
         }
 
     }

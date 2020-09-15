@@ -3,7 +3,14 @@
 
 @{ ViewBag.Title = "Users";
     Layout = "~/Views/Shared/_Layout.cshtml"; }
-    <h2>Users</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Users</h2>
+        </div>
+        <div class="col-md-6">
+            @Html.ActionLink("New User", "CreateUser", "Manage", null, new { @class = "btn btn-primary float-right" })
+        </div>
+    </div>
 
 <table id="users" class="table table-bordered table-hover">
     <thead>
@@ -11,7 +18,7 @@
             <th>Name</th>
             <th>Email</th>
             <th>Phone Number</th>
-            <th>Role</th>
+            <th>Assigned Property</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -40,7 +47,13 @@
                         data: "phoneNumber"
                     },
                     {
-                        data: "role"
+                        data: "propertyId",
+                        render: function (data, type, user) {
+                            if (user.propertyId > 0)
+                                return user.propertyId
+                            else
+                                return "";
+                        }
                     },
                     {
                         data: "id",

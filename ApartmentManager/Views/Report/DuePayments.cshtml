@@ -6,36 +6,37 @@
     Layout = "~/Views/Shared/_Layout.cshtml"; }
 
 
-@using (Html.BeginForm("SearchDues", "Report"))
+@using (Html.BeginForm("DuePayments", "Report"))
 {
 
     <div class="row">
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-3">
             @Html.LabelFor(m => m.PropertyId)
             <div class="input-group">
                 @Html.DropDownListFor(m => m.PropertyId, new SelectList(Model.Properties, "Id", "propertyName"), "Select Property", new { @class = "form-control" })
             </div>
             @Html.ValidationMessageFor(m => m.PropertyId)
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-3">
             @Html.LabelFor(m => m.ApartmentId)
             <div class="input-group">
                 @Html.DropDownListFor(m => m.ApartmentId, new SelectList(Model.Apartments, "Id", "UnitNo"), "Select Apartment", new { @class = "form-control" })
             </div>
             @Html.ValidationMessageFor(m => m.ApartmentId)
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-3">
             @Html.LabelFor(m => m.OwnerId)
             <div class="input-group">
                 @Html.DropDownListFor(m => m.OwnerId, new SelectList(Model.Owners, "Id", "Name"), "Select Owner", new { @class = "form-control" })
             </div>
             @Html.ValidationMessageFor(m => m.OwnerId)
         </div>
-    </div>
-
-
-                @Html.AntiForgeryToken()
-                                <button type="submit" class="btn btn-primary">Search</button>}
+        <div class="col-md-3">
+            <br/>
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </div> }
 
 
 
@@ -45,6 +46,7 @@
     <thead>
         <tr>
             <th>Property Name</th>
+            <th>Month</th>
             <th>Unit No</th>
             <th>Owner Name</th>
             <th>Total Due</th>
@@ -58,28 +60,41 @@
     <script>$(document).ready(function () {
             var table = $("#dues").DataTable({
                 ajax: {
-                    url: "/api/dues",
+                    url: "/api/duePayment",
                     dataSrc: ""
                 },
                 columns: [
                     {
-                        data: "propertyName"
-                    },
-
-                    {
-                        data: "unitNo"
-                    },
-                    {
-                        data: "owner.name",
+                        data: "property.property.propertyName",
+                        render: function (data, type, due) {
+                            return "Sanoj Sea Side Gate"
+                        }
                     },
                     {
-                        data: "due",
+                        data: "monthId",
+                        render: function (data, type, due) {
+                            const mID = due.monthId;
+                            var parts = mID.split(/(.{4})/).filter(O => O);
+                            return parts[0] + "-" + parts[1];
+                        }
+                    },
+                    {
+                        data: "apartment.unitNo"
+                    },
+                    {
+                        data: "property.owner.name",
+                        render: function (data, type, due) {
+                            return "Sanoj Hettige"
+                        }
+                    },
+                    {
+                        data: "maintenanceCost",
                     },
                     {
                         data: "id",
-                        render: function (data, type, owner) {
-                            let content = "<a href='/owner/edit/" + owner.id + "' class='btn btn-success btn-sm'>Edit</a>";
-                            content += "<button class='btn btn-danger btn-sm delete' data-owner-id=" + data + ">Delete</button>";
+                        render: function (data, type, due) {
+                            let content = "<a href='/Report/AddDuePayment/" + due.id + "' class='btn btn-success btn-sm'>Add Payment</a>";
+                            content += "<a href='/Report/DownloadDue/" + due.id + "' class='btn btn-primary btn-sm'>Download</a>";
 
                             return "<div class='btn-group'>"+content+"</div>";
                         }

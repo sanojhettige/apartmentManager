@@ -23,14 +23,19 @@ namespace WebApplication2.Controllers.Api
  
 
         //GET /api/apartment/1
-        public IHttpActionResult GetApartment(int id)
+        public IEnumerable<ApartmentDto> GetApartment(int id)
         {
-            var unit = _context.Apartment.SingleOrDefault(c => c.Id == id);
+            var unitsQuery = _context.Apartment
+                .Include(m => m.Owner)
+                .Include(m => m.Tenent)
+                .Where(m => m.Status != 4);
 
-            if (unit == null)
-                return NotFound();
+            if (id > 0)
+                unitsQuery = unitsQuery.Where(m => m.PropertyId == id);
 
-            return Ok(Mapper.Map<Apartment, ApartmentDto>(unit));
+            return unitsQuery
+                .ToList()
+                .Select(Mapper.Map<Apartment, ApartmentDto>);
         }
 
         //GET /api/apartment

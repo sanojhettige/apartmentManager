@@ -5,16 +5,19 @@ using System.Web;
 using System.Web.Mvc;
 using ApartmentManager.Models;
 using ApartmentManager.ViewModels;
+using Microsoft.AspNet.Identity;
 
 namespace ApartmentManager.Controllers
 {
     public class ApartmentController : Controller
     {
         private ApplicationDbContext _context;
+        private string userId;
 
         public ApartmentController()
         {
             _context = new ApplicationDbContext();
+            userId = "";// User.Identity.GetUserId();
         }
 
         // GET: Apartments/Random 
@@ -40,6 +43,12 @@ namespace ApartmentManager.Controllers
                 Tenents = tenents
             };
 
+            var activity = new Activity();
+            activity.ActivityLog = "View Apartments Page";
+            activity.UserId = userId;
+            activity.CreatedAt = DateTime.Now;
+            _context.Activity.Add(activity);
+
             if (User.IsInRole(RoleName.Admin))
                 return View("index", viewModel);
             else
@@ -63,6 +72,12 @@ namespace ApartmentManager.Controllers
                     Owners = owners,
                     Tenents = tenents
                 };
+
+                var activity = new Activity();
+                activity.ActivityLog = "View Apartments Page";
+                activity.UserId = userId;
+                activity.CreatedAt = DateTime.Now;
+                _context.Activity.Add(activity);
 
                 return View("index", viewModel);
             }
@@ -88,15 +103,14 @@ namespace ApartmentManager.Controllers
                 if (apartment.TenentId > 0 && selectedApartment.OwnerId > 0)
                 {
                     selectedApartment.TenentId = apartment.TenentId;
-
-                    selectedApartment.ModifiedAt = DateTime.Now;
-                    selectedApartment.ModifiedBy = "";
-                    _context.SaveChanges();
                 } else
                 {
 
                 }
-                
+                selectedApartment.ModifiedAt = DateTime.Now;
+                selectedApartment.ModifiedBy = userId;
+                _context.SaveChanges();
+
             }
 
             if (apartment.PropertyId > 0)
@@ -142,8 +156,8 @@ namespace ApartmentManager.Controllers
             {
                 apartment.CreatedAt = DateTime.Now;
                 apartment.ModifiedAt = DateTime.Now;
-                apartment.CreatedBy = "";
-                apartment.ModifiedBy = "";
+                apartment.CreatedBy = userId;
+                apartment.ModifiedBy = userId;
                 _context.Apartment.Add(apartment);
 
             }
@@ -154,7 +168,7 @@ namespace ApartmentManager.Controllers
                 selectedApartment.FloorNo = apartment.FloorNo;
                 selectedApartment.UnitNo = apartment.UnitNo;
                 selectedApartment.ModifiedAt = DateTime.Now;
-                selectedApartment.ModifiedBy = "";
+                selectedApartment.ModifiedBy = userId;
 
             }
 

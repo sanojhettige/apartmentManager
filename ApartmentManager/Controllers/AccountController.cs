@@ -18,6 +18,7 @@ namespace ApartmentManager.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext _context;
 
         public AccountController()
         {
@@ -27,6 +28,7 @@ namespace ApartmentManager.Controllers
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _context = new ApplicationDbContext();
         }
 
         public ApplicationSignInManager SignInManager
@@ -87,7 +89,7 @@ namespace ApartmentManager.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Invalid email address or password.");
                     return View(model);
             }
         }
@@ -97,7 +99,12 @@ namespace ApartmentManager.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            int userCount = UserManager.Users.Count();
+
+            if (userCount <= 0)
+                return View();
+            else
+                return View("Login");
         }
 
         //

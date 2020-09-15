@@ -3,9 +3,14 @@
 @{ ViewBag.Title = "Owners";
     Layout = "~/Views/Shared/_Layout.cshtml"; }
 
-<p>
-    @Html.ActionLink("New Owner", "Create", "Owner", null, new { @class = "btn btn-primary" })
-</p>
+<div class="row">
+    <div class="col-md-6">
+        <h2>Owners</h2>
+    </div>
+    <div class="col-md-6">
+        @Html.ActionLink("New Owner", "Create", "Owner", null, new { @class = "btn btn-primary float-right" })
+    </div>
+</div>
 <table id="owners" class="table table-bordered table-hover">
     <thead>
         <tr>
