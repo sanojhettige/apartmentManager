@@ -1,0 +1,92 @@
+﻿@model ApartmentManager.ViewModels.ApartmentBillViewModel
+
+@section styles
+{
+    @Styles.Render("~/bundles/datepicker-css")
+}
+
+@{ /**/
+
+    ViewBag.Title = "Create Bill";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+@using (Html.BeginForm("SaveBill", "Apartment"))
+{
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.MaintenanceInvoice.MonthId)
+        <div class="input-group">
+            @Html.TextBoxFor(m => m.MaintenanceInvoice.MonthId, new { @class = "form-control monthpicker" })
+        </div>
+        @Html.ValidationMessageFor(m => m.MaintenanceInvoice.MonthId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.MaintenanceInvoice.MaintenanceCost)
+        @Html.TextBoxFor(m => m.MaintenanceInvoice.MaintenanceCost, new { @class = "form-control", type = "number" })
+        @Html.ValidationMessageFor(m => m.MaintenanceInvoice.MaintenanceCost, "", new { @class = "text-danger" })
+    </div>
+</div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(m => m.MaintenanceInvoice.ElectricityUnits)
+                        @Html.TextBoxFor(m => m.MaintenanceInvoice.ElectricityUnits, new { @class = "form-control", type = "number" })
+                        @Html.ValidationMessageFor(m => m.MaintenanceInvoice.ElectricityUnits, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(m => m.MaintenanceInvoice.ElectricityCost)
+                        @Html.TextBoxFor(m => m.MaintenanceInvoice.ElectricityCost, new { @class = "form-control", type = "number" })
+                        @Html.ValidationMessageFor(m => m.MaintenanceInvoice.ElectricityCost, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        @Html.LabelFor(m => m.MaintenanceInvoice.WaterUnits)
+                                        @Html.TextBoxFor(m => m.MaintenanceInvoice.WaterUnits, new { @class = "form-control", type = "number" })
+                                        @Html.ValidationMessageFor(m => m.MaintenanceInvoice.WaterUnits, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        @Html.LabelFor(m => m.MaintenanceInvoice.WaterCost)
+                                        @Html.TextBoxFor(m => m.MaintenanceInvoice.WaterCost, new { @class = "form-control", type = "number" })
+                                        @Html.ValidationMessageFor(m => m.MaintenanceInvoice.WaterCost, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        @Html.LabelFor(m => m.MaintenanceInvoice.GasUnits)
+                                                        @Html.TextBoxFor(m => m.MaintenanceInvoice.GasUnits, new { @class = "form-control", type = "number" })
+                                                        @Html.ValidationMessageFor(m => m.MaintenanceInvoice.GasUnits, "", new { @class = "text-danger" })
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        @Html.LabelFor(m => m.MaintenanceInvoice.GasCost)
+                                                        @Html.TextBoxFor(m => m.MaintenanceInvoice.GasCost, new { @class = "form-control", type = "number" })
+                                                        @Html.ValidationMessageFor(m => m.MaintenanceInvoice.GasCost, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="form-group col-md-6">
+                                                                        @Html.LabelFor(m => m.MaintenanceInvoice.OtherCost)
+                                                                        @Html.TextBoxFor(m => m.MaintenanceInvoice.OtherCost, new { @class = "form-control", type = "number" })
+                                                                        @Html.ValidationMessageFor(m => m.MaintenanceInvoice.OtherCost, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                    <div class="form-group col-md-6">
+                                                                        @Html.LabelFor(m => m.MaintenanceInvoice.OtherNotes)
+                                                                        @Html.TextBoxFor(m => m.MaintenanceInvoice.OtherNotes, new { @class = "form-control", type = "number" })
+                                                                        @Html.ValidationMessageFor(m => m.MaintenanceInvoice.OtherNotes, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                                                @Html.HiddenFor(m => m.MaintenanceInvoice.ApartmentId)
+                                                                                                @Html.HiddenFor(m => m.MaintenanceInvoice.Id)
+                                                                                                                @Html.AntiForgeryToken()
+                                                                                                                                <button type="submit" class="btn btn-primary">Save</button>}
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/datepicker-js")
+}

@@ -27,10 +27,10 @@ namespace WebApplication2.Controllers.Api
         //GET /api/user
         public IEnumerable<ApplicationUser> GetUser(string query = null)
         {
-            //return _context.Users
-            // .Where(m => m.Id != "4").ToList();
+            var userId = User.Identity.GetUserId(); 
 
             return _context.Users
+                .Where(u => u.Id != userId)
                 .Include(u => u.Roles)
                 //.Include(p => p.PropertyId)
                 .ToList();

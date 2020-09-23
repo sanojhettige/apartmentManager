@@ -16,6 +16,7 @@ namespace ApartmentManager.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext _context;
 
         public ManageController()
         {
@@ -25,6 +26,7 @@ namespace ApartmentManager.Controllers
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _context = new ApplicationDbContext();
         }
 
         public ApplicationSignInManager SignInManager
@@ -53,28 +55,48 @@ namespace ApartmentManager.Controllers
 
         //
         // GET: /Manage/Index
-        public async Task<ActionResult> Index(ManageMessageId? message)
+        public async Task<ActionResult> Index()
         {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
-                : "";
-
             var userId = User.Identity.GetUserId();
-            var model = new IndexViewModel
+            var user = await UserManager.FindByIdAsync(userId);
+            if (user == null)
+                return HttpNotFound();
+
+            ViewData["user"] = user;
+
+            var viewModel = new ProfileViewModel
             {
-                HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-                Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                Name = user.Name,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber
+
             };
+
+            return View(viewModel);
+        }
+
+        // POST: /Manage/Index
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Index(ProfileViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            user.Name = model.Name;
+            user.Email = model.Email;
+            user.PhoneNumber = model.PhoneNumber;
+            var result = await UserManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", new { Message = ManageMessageId.UpdateProfileSuccess });
+            }
+            AddErrors(result);
             return View(model);
         }
+
 
         //
         // GET: /Manage/ChangePassword
@@ -101,7 +123,7 @@ namespace ApartmentManager.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                return RedirectToAction("ChangePassword", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
             AddErrors(result);
             return View(model);
@@ -115,7 +137,7 @@ namespace ApartmentManager.Controllers
 
         // GET: /Manage/CreateUser
         [AllowAnonymous]
-        public ActionResult CreateUser(string Id)
+        public ActionResult CreateUser()
         {
             var list = new SelectList(new[] 
             {
@@ -125,15 +147,24 @@ namespace ApartmentManager.Controllers
             },
             "ID", "Name", 1);
 
-            ViewData["list"] = list;
+            //var properties = _context.Property.ToList();
 
-            return View();
+            var viewModel = new RegisterViewModel
+            {
+            };
+
+            ViewData["list"] = list;
+            //ViewData["properties"] = properties;
+
+            return View(viewModel);
         }
 
         //GET: /Manage/UpdateUser/1
-        public ActionResult UpdateUser(string Id)
+        public async Task<ActionResult> UpdateUser(string userId)
         {
-            var user = UserManager.FindByIdAsync(Id);
+            var userId2 = User.Identity.GetUserId();
+            var user = await UserManager.FindByIdAsync(userId2);
+
             if (user == null)
                 return HttpNotFound();
 
@@ -145,27 +176,34 @@ namespace ApartmentManager.Controllers
             },
             "ID", "Name", 1);
 
-
             ViewData["list"] = list;
             ViewData["user"] = user;
 
             var viewModel = new RegisterViewModel
             {
-                Name = "" // user.Name
+                Name = user.Name,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber
 
             };
 
             return View("CreateUser", viewModel);
         }
 
-        // POST: /Account/Register
+        // POST: /Manager/CreateUser
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateUser(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var user = new ApplicationUser
+                return View(model);
+            }
+            var user = await UserManager.FindByIdAsync(model.Id);
+
+            if(user ==  null)
+            {
+                var userData = new ApplicationUser
                 {
                     UserName = model.Email,
                     Email = model.Email,
@@ -174,29 +212,41 @@ namespace ApartmentManager.Controllers
                     Name = model.Name
                 };
 
-                if(model.Id == "")
+                var result = await UserManager.CreateAsync(userData, model.Password);
+
+                if (result.Succeeded)
                 {
-                    var result = await UserManager.CreateAsync(user, model.Password);
-                    if (result.Succeeded)
-                    {
-                        var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
-                        var roleManager = new RoleManager<IdentityRole>(roleStore);
-                        await roleManager.CreateAsync(new IdentityRole("Admin"));
-                        await UserManager.AddToRoleAsync(user.Id, "admin");
-                        return RedirectToAction("Users", "Manage");
-                    }
-
-                    AddErrors(result);
-
-                } else
-                {
-                    
-
+                    var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                    var roleManager = new RoleManager<IdentityRole>(roleStore);
+                    await roleManager.CreateAsync(new IdentityRole(model.RoleId));
+                    await UserManager.AddToRoleAsync(user.Id, model.RoleId);
+                    return RedirectToAction("Users", "Manage");
                 }
-            }
 
+                AddErrors(result);
+
+            } else
+            {
+                user.Name = model.Name;
+                user.Email = model.Email;
+                user.PhoneNumber = model.PhoneNumber;
+                var result = await UserManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                    var roleManager = new RoleManager<IdentityRole>(roleStore);
+                    await roleManager.CreateAsync(new IdentityRole(model.RoleId));
+                    await UserManager.AddToRoleAsync(user.Id, model.RoleId);
+
+                    return RedirectToAction("Index", new { Message = ManageMessageId.UpdateProfileSuccess });
+                }
+                AddErrors(result);
+                return View("CreateUser", model);
+
+            }
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return View("CreateUser", model);
         }
 
 
@@ -256,6 +306,7 @@ namespace ApartmentManager.Controllers
         {
             AddPhoneSuccess,
             ChangePasswordSuccess,
+            UpdateProfileSuccess,
             SetTwoFactorSuccess,
             SetPasswordSuccess,
             RemoveLoginSuccess,

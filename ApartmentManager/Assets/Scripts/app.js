@@ -57,6 +57,10 @@
         $('.datepicker').datepicker({
             format: "yyyy-mm-dd"
         });
+
+        $('.monthpicker').datepicker({
+            format: "yyyy-mm"
+        });
     }
 
     $(document).on('click', '.assignOwner', function (e) {

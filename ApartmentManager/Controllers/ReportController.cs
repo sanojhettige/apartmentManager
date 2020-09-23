@@ -33,6 +33,7 @@ namespace ApartmentManager.Controllers
 
 
         // GET: DuePayments
+        [HttpGet]
         [Authorize(Roles = RoleName.Admin)]
         public ActionResult DuePayments()
         {
@@ -50,8 +51,9 @@ namespace ApartmentManager.Controllers
         }
 
         // POST: SearchDues
+        [HttpPost]
         [Authorize(Roles = RoleName.Admin)]
-        public ActionResult SearchDues()
+        public ActionResult DuePayments(ReportFormViewModel model)
         {
             var owners = _context.Owner.ToList();
             var apartments = _context.Apartment.ToList();
@@ -65,9 +67,27 @@ namespace ApartmentManager.Controllers
             return View("DuePayments", viewModel);
         }
 
+        // GET: /Report/AddDuePayment
+        [HttpGet]
+        [Authorize(Roles = RoleName.Admin)]
+        public ActionResult AddDuePayment()
+        {
+            return View();
+        }
+
+
+        // GET: /Report/DownloadDue
+        [HttpGet]
+        [Authorize(Roles = RoleName.Admin)]
+        public ActionResult DownloadDue(int? Id)
+        {
+            return View();
+        }
+
+
         // GET: Apartments
         [Authorize(Roles = RoleName.Admin)]
-        public ActionResult Apartments()
+        public ActionResult Apartments(int? Id)
         {
             return View();
         }

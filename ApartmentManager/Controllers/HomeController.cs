@@ -19,11 +19,18 @@ namespace ApartmentManager.Controllers
 
         public ActionResult Index()
         {
-            var propTotal = _context.Property.Count();
-            var aptTotal = _context.Apartment.Count();
-            var owners = _context.Owner.Count();
-            var tenents = _context.Tenent.Count();
-            ViewData["propTotal"] = propTotal;
+            int propTotal = _context.Property.Count();
+            int aptTotal = _context.Apartment.Count();
+            int owners = _context.Owner.Count();
+            int tenants = _context.Tenent.Count();
+            int totalDue = 0;
+            int totalVacant = _context.Apartment.Where(a => a.OwnerId == null).Count();
+            ViewData["propTotal"] = propTotal.ToString();
+            ViewData["aptTotal"] = aptTotal.ToString();
+            ViewData["ownerTotal"] = owners.ToString();
+            ViewData["tenantTotal"] = tenants.ToString();
+            ViewData["totalDue"] = totalDue.ToString();
+            ViewData["totalVacant"] = totalVacant.ToString();
 
 
             if (User.IsInRole("Admin"))

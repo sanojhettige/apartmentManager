@@ -103,6 +103,27 @@ namespace ApartmentManager.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class ProfileViewModel
+    {
+        public string Id { get; set; }
+        [Required]
+        [Display(Name = "Name")]
+        [StringLength(150)]
+        public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Phone")]
+        [StringLength(15)]
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+    }
+
+
     public class ResetPasswordViewModel
     {
         [Required]

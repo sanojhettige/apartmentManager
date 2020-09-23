@@ -17,7 +17,7 @@ namespace ApartmentManager.Controllers
         public ApartmentController()
         {
             _context = new ApplicationDbContext();
-            userId = "";// User.Identity.GetUserId();
+            userId = "";//User.Identity.GetUserId();
         }
 
         // GET: Apartments/Random 
@@ -194,6 +194,77 @@ namespace ApartmentManager.Controllers
                 ApartmentTypes = types
             };
             return View("ApartmentForm", viewModel);
+        }
+
+
+        [Authorize(Roles = RoleName.Admin)]
+        public ActionResult GenerateBill(int Id)
+        {
+            var apartment = _context.Apartment.SingleOrDefault(c => c.Id == Id);
+            var invoice = new MaintenanceInvoice();
+            if (apartment == null)
+                return HttpNotFound();
+
+            var aptType = _context.ApartmentType.SingleOrDefault(c => c.Id == apartment.ApartmentTypeId);
+
+            invoice.ApartmentId = Id;
+            invoice.MaintenanceCost = aptType.MaintenanceCharge;
+
+            var viewModel = new ApartmentBillViewModel
+            {
+                MaintenanceInvoice = invoice
+            };
+            return View(viewModel);
+        }
+
+
+        
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.Admin)]
+        public ActionResult SaveBill(MaintenanceInvoice maintenanceInvoice)
+        {
+            //Model.State to check validation from the model
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new ApartmentBillViewModel
+                {
+                    MaintenanceInvoice = maintenanceInvoice
+                };
+
+                return View("GenerateBill", viewModel);
+            }
+            if (maintenanceInvoice.Id == 0)
+            {
+                maintenanceInvoice.CreatedAt = DateTime.Now;
+                maintenanceInvoice.ModifiedAt = DateTime.Now;
+                maintenanceInvoice.CreatedBy = userId;
+                maintenanceInvoice.ModifiedBy = userId;
+                maintenanceInvoice.Status = 1;
+                _context.MaintenanceInvoice.Add(maintenanceInvoice);
+
+            }
+            else
+            {
+                var selectedInvoice = _context.MaintenanceInvoice.Single(m => m.Id == maintenanceInvoice.Id);
+                selectedInvoice.MaintenanceCost = maintenanceInvoice.MaintenanceCost;
+                selectedInvoice.ElectricityUnits = maintenanceInvoice.ElectricityUnits;
+                selectedInvoice.ElectricityCost = maintenanceInvoice.ElectricityCost;
+                selectedInvoice.WaterUnits = maintenanceInvoice.WaterUnits;
+                selectedInvoice.WaterCost = maintenanceInvoice.WaterCost;
+                selectedInvoice.GasUnits = maintenanceInvoice.GasUnits;
+                selectedInvoice.GasCost = maintenanceInvoice.GasCost;
+                selectedInvoice.OtherNotes = maintenanceInvoice.OtherNotes;
+                selectedInvoice.OtherCost = maintenanceInvoice.OtherCost;
+                selectedInvoice.ModifiedAt = DateTime.Now;
+                selectedInvoice.ModifiedBy = userId;
+
+            }
+
+            _context.SaveChanges();
+
+            return RedirectToAction("index", "Apartment");
         }
     }
 }

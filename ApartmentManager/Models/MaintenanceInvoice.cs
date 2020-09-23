@@ -20,29 +20,39 @@ namespace ApartmentManager.Models
         [Display(Name = "Month")]
         public string MonthId { get; set; }
 
+        [Display(Name = "Maintenance Cost")]
         [Range(1, 99999)]
         public decimal MaintenanceCost { get; set; }
 
-        [Range(1, 9999)]
+        [Display(Name = "Electricity Units")]
+        [Range(0, 9999)]
         public decimal ElectricityUnits { get; set; }
-        [Range(1, 99999)]
+
+        [Display(Name = "Electricity Cost")]
+        [Range(0, 99999)]
         public decimal ElectricityCost { get; set; }
 
-        [Range(1, 999)]
+        [Display(Name = "Water Units")]
+        [Range(0, 999)]
         public decimal WaterUnits { get; set; }
 
-        [Range(1, 99999)]
+        [Display(Name = "Water Cost")]
+        [Range(0, 99999)]
         public decimal WaterCost { get; set; }
 
-        [Range(1, 999)]
+        [Display(Name = "Gas Units")]
+        [Range(0, 999)]
         public decimal GasUnits { get; set; }
 
-        [Range(1, 99999)]
+        [Display(Name = "Gas Cost")]
+        [Range(0, 99999)]
         public decimal GasCost { get; set; }
 
-        [Range(1, 99999)]
+        [Display(Name = "Other Cost")]
+        [Range(0, 99999)]
         public decimal OtherCost { get; set; }
 
+        [Display(Name = "Other Notes")]
         public string OtherNotes { get; set; }
 
         public string CreatedBy { get; set; }

@@ -253,6 +253,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ApartmentTypeFormViewModel.cs" />
+    <Compile Include="ViewModels\ApartmentBillViewModel.cs" />
     <Compile Include="ViewModels\OwnerFormViewModel.cs" />
     <Compile Include="ViewModels\PropertyFormViewModel.cs" />
     <Compile Include="ViewModels\ApartmentFormViewModel.cs" />
@@ -2506,6 +2507,9 @@
     <Content Include="Views\SecurityGuard\index.cshtml" />
     <Content Include="Views\Manage\Users.cshtml" />
     <Content Include="Views\Manage\CreateUser.cshtml" />
+    <Content Include="Views\Report\AddDuePayment.cshtml" />
+    <Content Include="Views\Report\DownloadDue.cshtml" />
+    <Content Include="Views\Apartment\GenerateBill.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
