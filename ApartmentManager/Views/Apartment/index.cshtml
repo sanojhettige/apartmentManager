@@ -89,7 +89,7 @@
                         data: "id",
                         render: function (data, type, unit) {
                             let content = "<a href='/apartment/edit/" + unit.id + "' class='btn btn-success btn-sm'>Edit</a>";
-                            content = "<a href='/apartment/generateBill/" + unit.id + "' class='btn btn-info btn-sm'>Invoice</a>";
+                            content = "<a href='/apartment/invoices/" + unit.id + "' class='btn btn-info btn-sm'>Invoices</a>";
                             content += "<button class='btn btn-danger btn-sm delete' data-apartment-id=" + data + ">Delete</button>";
 
                             return "<div class='btn-group'>" + content + "</div>";

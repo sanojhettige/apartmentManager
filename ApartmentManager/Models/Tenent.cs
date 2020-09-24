@@ -17,9 +17,11 @@ namespace ApartmentManager.Models
 
         [Display(Name = "NIC No")]
         [StringLength(20)]
+        [RegularExpression(@"^([0-9]{9}[x|X|v|V]|[0-9]{12})$", ErrorMessage = "Not a valid NIC number")]
         public string NicNo { get; set; }
 
         [Display(Name = "Phone Number")]
+        [RegularExpression(@"^(?:7|0|(?:\+94))[1-9]{2}[0-9]{7,8}$", ErrorMessage = "Not a valid phone number")]
         public string PhoneNumber { get; set; }
 
         [Display(Name = "Email Address")]

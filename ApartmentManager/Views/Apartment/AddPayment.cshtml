@@ -1,0 +1,40 @@
+﻿@model ApartmentManager.ViewModels.ApartmentBillViewModel
+
+@{ /**/
+
+    ViewBag.Title = "Add Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+@using (Html.BeginForm("SavePayment", "Apartment"))
+{
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(m => m.MaintenanceInvoice.PaidAmount)
+                        @Html.TextBoxFor(m => m.MaintenanceInvoice.PaidAmount, new { @class = "form-control", type = "number" })
+                        @Html.ValidationMessageFor(m => m.MaintenanceInvoice.PaidAmount, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(m => m.MaintenanceInvoice.PaidNote)
+                        @Html.TextBoxFor(m => m.MaintenanceInvoice.PaidNote, new { @class = "form-control", type = "number" })
+                        @Html.ValidationMessageFor(m => m.MaintenanceInvoice.PaidNote, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                                                                                                @Html.HiddenFor(m => m.MaintenanceInvoice.Id)
+                                                                                                                @Html.AntiForgeryToken()
+                                                                                                                                <button type="submit" class="btn btn-primary">Save</button>}
+
+<div class="row">
+    <div class="col-md-12">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -13,6 +13,7 @@
 
 @using (Html.BeginForm("SaveBill", "Apartment"))
 {
+
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.MaintenanceInvoice.MonthId)
@@ -83,6 +84,12 @@
                                                                                                 @Html.HiddenFor(m => m.MaintenanceInvoice.Id)
                                                                                                                 @Html.AntiForgeryToken()
                                                                                                                                 <button type="submit" class="btn btn-primary">Save</button>}
+
+<div class="row">
+    <div class="col-md-12">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    </div>
+</div>
 
 
 @section scripts

@@ -1,0 +1,77 @@
+﻿@model ApartmentManager.ViewModels.ReportFormViewModel
+
+@{ /**/
+
+    ViewBag.Title = "Due Payments";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+<table id="invoices" class="table table-bordered table-hover" url='/api/duePayment/@Html.Display("apartmentId")'>
+    <thead>
+        <tr>
+            <th>Month</th>
+            <th>Total Amount</th>
+            <th>Due Amount</th>
+            <th>Paid Amount</th>
+            <th width="20%">Actions</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts
+{
+    <script>
+$(document).ready(function () {
+            var table = $("#invoices").DataTable({
+                ajax: {
+                    url: $("#invoices").attr("url"),
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "monthId",
+                        render: function (data, type, due) {
+                            const mID = due.monthId;
+                            if (mID) {
+                                var parts = mID.split(/(.{4})/).filter(O => O);
+                                return parts[0] + "-" + parts[1];
+                            }
+                            return "";
+
+                        }
+                    },
+                    {
+                        data: "maintenanceCost",
+                        render: function (data, type, due) {
+                            let total = due.maintenanceCost + due.electricityCost + due.waterCost + due.gasCost + due.otherCost;
+                            return total;
+                        }
+                    },
+                    {
+                        data: "maintenanceCost",
+                        render: function (data, type, due) {
+                            let total = due.maintenanceCost + due.electricityCost + due.waterCost + due.gasCost + due.otherCost;
+                            let paid = due.paidAmount;
+                            return total - paid;
+                        }
+                    },
+                    {
+                        data: "paidAmount",
+                    },
+                    {
+                        data: "id",
+                        render: function (data, type, due) {
+                            let content = "<a href='/Apartment/AddDuePayment/" + due.id + "' class='btn btn-success btn-sm'>Add Payment</a>";
+                            content += "<a href='/Print/Invoice/" + due.id + "' class='btn btn-primary btn-sm'>Download</a>";
+
+                            return "<div class='btn-group'>"+content+"</div>";
+                        }
+                    }
+                ]
+            });
+
+
+        })</script>
+}
+
+

@@ -65,6 +65,15 @@
       <HintPath>..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Syncfusion.Compression.Portable, Version=18.2200.0.59, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Compression.Net.Core.18.2.0.59\lib\netstandard2.0\Syncfusion.Compression.Portable.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Licensing, Version=18.2460.0.59, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Licensing.18.2.0.59\lib\net46\Syncfusion.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Pdf.Portable, Version=18.2200.0.59, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Pdf.Net.Core.18.2.0.59\lib\netstandard2.0\Syncfusion.Pdf.Portable.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -73,6 +82,9 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Text.Encoding.CodePages, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encoding.CodePages.4.4.0\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -214,6 +226,7 @@
     <Compile Include="Controllers\CronController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OwnerController.cs" />
+    <Compile Include="Controllers\PrintController.cs" />
     <Compile Include="Controllers\PropertyController.cs" />
     <Compile Include="Controllers\Api\PropertyController.cs" />
     <Compile Include="Controllers\Api\ApartmentController.cs" />
@@ -236,6 +249,10 @@
     <Compile Include="Migrations\202009131625384_initialCreate.cs" />
     <Compile Include="Migrations\202009131625384_initialCreate.Designer.cs">
       <DependentUpon>202009131625384_initialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009241708222_addPayemnt.cs" />
+    <Compile Include="Migrations\202009241708222_addPayemnt.Designer.cs">
+      <DependentUpon>202009241708222_addPayemnt.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -2510,11 +2527,14 @@
     <Content Include="Views\Report\AddDuePayment.cshtml" />
     <Content Include="Views\Report\DownloadDue.cshtml" />
     <Content Include="Views\Apartment\GenerateBill.cshtml" />
+    <Content Include="Views\Apartment\ApartmentInvoices.cshtml" />
+    <Content Include="Views\Apartment\AddPayment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Cron\" />
     <Folder Include="Views\DuePayment\" />
+    <Folder Include="Views\Print\" />
     <Folder Include="Views\Securities\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
@@ -2541,6 +2561,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202009131625384_initialCreate.resx">
       <DependentUpon>202009131625384_initialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009241708222_addPayemnt.resx">
+      <DependentUpon>202009241708222_addPayemnt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -2572,6 +2595,13 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

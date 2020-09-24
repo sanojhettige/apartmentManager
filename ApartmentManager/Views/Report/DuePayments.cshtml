@@ -74,8 +74,12 @@
                         data: "monthId",
                         render: function (data, type, due) {
                             const mID = due.monthId;
-                            var parts = mID.split(/(.{4})/).filter(O => O);
-                            return parts[0] + "-" + parts[1];
+                            if (mID) {
+                                var parts = mID.split(/(.{4})/).filter(O => O);
+                                return parts[0] + "-" + parts[1];
+                            }
+                            return "";
+                            
                         }
                     },
                     {
@@ -94,7 +98,7 @@
                         data: "id",
                         render: function (data, type, due) {
                             let content = "<a href='/Report/AddDuePayment/" + due.id + "' class='btn btn-success btn-sm'>Add Payment</a>";
-                            content += "<a href='/Report/DownloadDue/" + due.id + "' class='btn btn-primary btn-sm'>Download</a>";
+                            content += "<a href='/Print/Invoice/" + due.id + "' class='btn btn-primary btn-sm'>Download</a>";
 
                             return "<div class='btn-group'>"+content+"</div>";
                         }

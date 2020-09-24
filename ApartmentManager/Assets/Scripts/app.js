@@ -59,7 +59,9 @@
         });
 
         $('.monthpicker').datepicker({
-            format: "yyyy-mm"
+            format: "yyyy-mm",
+            viewMode: "months",
+            minViewMode: "months"
         });
     }
 

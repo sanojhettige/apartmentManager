@@ -13,6 +13,7 @@ namespace ApartmentManager.Models
 
         public Apartment Apartment { get; set; }
 
+
         [Required]
         [Display(Name = "Apartment Name")]
         public int ApartmentId { get; set; }
@@ -54,6 +55,12 @@ namespace ApartmentManager.Models
 
         [Display(Name = "Other Notes")]
         public string OtherNotes { get; set; }
+
+        [Display(Name = "Paid Amount")]
+        public decimal PaidAmount { get; set; }
+
+        [Display(Name = "Pay Note")]
+        public string PaidNote { get; set; }
 
         public string CreatedBy { get; set; }
 

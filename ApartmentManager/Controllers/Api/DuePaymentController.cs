@@ -25,19 +25,31 @@ namespace WebApplication2.Controllers.Api
         }
 
         //GET /api/duePayment
-        public IEnumerable<MaintenanceInvoiceDto> GetDuePayment(string query = null)
+        public IEnumerable<MaintenanceInvoiceDto> GetDuePayment(int Id)
         {
-
-            var dueQuery = _context.MaintenanceInvoice
+            if(Id > 0)
+            {
+                var dueQuery = _context.MaintenanceInvoice
                 .Include(p => p.Apartment)
-                .Where(m => m.Status == 1);
+                .Where(m => m.Status == 1)
+                .Where(m => m.ApartmentId == Id);
 
-            return dueQuery
+                return dueQuery
                 .ToList()
                 .Select(Mapper.Map<MaintenanceInvoice, MaintenanceInvoiceDto>);
 
-        }
+            } else
+            {
+                var dueQuery = _context.MaintenanceInvoice
+                .Include(p => p.Apartment)
+                .Where(m => m.Status == 1);
 
+                return dueQuery
+                .ToList()
+                .Select(Mapper.Map<MaintenanceInvoice, MaintenanceInvoiceDto>);
+            }
+
+        }
     }
 
 }

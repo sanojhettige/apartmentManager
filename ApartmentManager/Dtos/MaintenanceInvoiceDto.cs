@@ -39,6 +39,10 @@ namespace ApartmentManager.Dtos
 
         public string OtherNotes { get; set; }
 
+        public decimal PaidAmount { get; set; }
+
+        public string PaidNote { get; set; }
+
         public string CreatedBy { get; set; }
 
         public DateTime CreatedAt { get; set; }

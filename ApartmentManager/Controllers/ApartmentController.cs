@@ -196,6 +196,17 @@ namespace ApartmentManager.Controllers
             return View("ApartmentForm", viewModel);
         }
 
+        [Authorize(Roles = RoleName.Admin)]
+        public ActionResult Invoices(int Id)
+        {
+            var apartment = _context.Apartment.SingleOrDefault(c => c.Id == Id);
+            if (apartment == null)
+                return HttpNotFound();
+
+            ViewData["apartmentId"] = Id;
+
+            return View("ApartmentInvoices");
+        }
 
         [Authorize(Roles = RoleName.Admin)]
         public ActionResult GenerateBill(int Id)
@@ -209,6 +220,7 @@ namespace ApartmentManager.Controllers
 
             invoice.ApartmentId = Id;
             invoice.MaintenanceCost = aptType.MaintenanceCharge;
+            invoice.MonthId = DateTime.Now.ToString("yyyy-MM");
 
             var viewModel = new ApartmentBillViewModel
             {
@@ -217,8 +229,30 @@ namespace ApartmentManager.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = RoleName.Admin)]
+        public ActionResult EditBill(int Id)
+        {
+            var invoice = _context.MaintenanceInvoice.SingleOrDefault(c => c.Id == Id);
 
-        
+            if (invoice == null)
+                return HttpNotFound();
+
+
+            var apartment = _context.Apartment.SingleOrDefault(c => c.Id == invoice.ApartmentId);
+
+            var aptType = _context.ApartmentType.SingleOrDefault(c => c.Id == apartment.ApartmentTypeId);
+
+            invoice.MaintenanceCost = aptType.MaintenanceCharge;
+
+            var viewModel = new ApartmentBillViewModel
+            {
+                MaintenanceInvoice = invoice
+            };
+            return View("GenerateBill", viewModel);
+        }
+
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -234,6 +268,22 @@ namespace ApartmentManager.Controllers
                 };
 
                 return View("GenerateBill", viewModel);
+            } else
+            {
+                var invExists = _context.MaintenanceInvoice
+                    .Where(m => m.MonthId == maintenanceInvoice.MonthId)
+                    .Where(m => m.ApartmentId == maintenanceInvoice.ApartmentId).FirstOrDefault();
+
+                var viewModel = new ApartmentBillViewModel
+                {
+                    MaintenanceInvoice = maintenanceInvoice
+                };
+
+                if(invExists != null && maintenanceInvoice.Id == 0)
+                {
+                    return RedirectToAction("EditBill/"+ invExists.Id, "Apartment");
+                }
+
             }
             if (maintenanceInvoice.Id == 0)
             {
@@ -263,8 +313,71 @@ namespace ApartmentManager.Controllers
             }
 
             _context.SaveChanges();
+            int invoiceId = maintenanceInvoice.Id;
 
-            return RedirectToAction("index", "Apartment");
+            if(invoiceId > 0)
+                return RedirectToAction("Invoice/" + invoiceId, "Print");
+            else
+                return RedirectToAction("index", "Apartment");
         }
+
+        [Authorize(Roles = RoleName.Admin)]
+        public ActionResult AddDuePayment(int Id)
+        {
+            var invoice = _context.MaintenanceInvoice.SingleOrDefault(c => c.Id == Id);
+
+            if (invoice == null)
+                return HttpNotFound();
+
+
+            var apartment = _context.Apartment.SingleOrDefault(c => c.Id == invoice.ApartmentId);
+
+            var aptType = _context.ApartmentType.SingleOrDefault(c => c.Id == apartment.ApartmentTypeId);
+
+            invoice.MaintenanceCost = aptType.MaintenanceCharge;
+
+            var viewModel = new ApartmentBillViewModel
+            {
+                MaintenanceInvoice = invoice
+            };
+            return View("AddPayment", viewModel);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.Admin)]
+        public ActionResult SavePayment(MaintenanceInvoice maintenanceInvoice)
+        {
+            //Model.State to check validation from the model
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new ApartmentBillViewModel
+                {
+                    MaintenanceInvoice = maintenanceInvoice
+                };
+
+                return View("AddPayment", viewModel);
+            }
+ 
+            if (maintenanceInvoice.Id == 0)
+            {
+                return RedirectToAction("index", "Apartment");
+
+            }
+            else
+            {
+                var selectedInvoice = _context.MaintenanceInvoice.Single(m => m.Id == maintenanceInvoice.Id);
+                selectedInvoice.ModifiedAt = DateTime.Now;
+                selectedInvoice.ModifiedBy = userId;
+                selectedInvoice.PaidAmount = maintenanceInvoice.PaidAmount;
+                selectedInvoice.PaidNote = maintenanceInvoice.PaidNote;
+
+                _context.SaveChanges();
+                return RedirectToAction("Invoices/" + selectedInvoice.ApartmentId, "Apartment");
+
+            }
+        }
+
     }
 }
