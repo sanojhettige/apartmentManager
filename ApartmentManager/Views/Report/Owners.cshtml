@@ -1,0 +1,55 @@
+﻿
+@{ ViewBag.Title = "Owners";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+@section styles
+{
+    @Styles.Render("~/bundles/report-css")
+}
+
+<table id="owners" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Nic No</th>
+            <th>Phone Number</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts
+{
+    @Scripts.Render("~/bundles/report-js")
+    <script>
+        $(document).ready(function () {
+            var table = $("#owners").DataTable({
+                ajax: {
+                    url: "/api/owner",
+                    dataSrc: ""
+                },
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'csv',
+                        className: 'btn btn-primary'
+                    },
+                    {
+                        extend: 'pdf',
+                        className: 'btn btn-primary'
+                    }
+                ],
+                columns: [
+                    {
+                        data: "name",
+                    },
+
+                    {
+                        data: "nicNo"
+                    },
+                    {
+                        data: "phoneNumber",
+                    }
+                ]
+            });
+        })</script>
+}

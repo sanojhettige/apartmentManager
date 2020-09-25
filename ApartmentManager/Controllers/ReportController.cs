@@ -57,11 +57,16 @@ namespace ApartmentManager.Controllers
         {
             var owners = _context.Owner.ToList();
             var apartments = _context.Apartment.ToList();
+            var properties = _context.Property.ToList();
 
             var viewModel = new ReportFormViewModel
             {
                 Apartments = apartments,
-                Owners = owners
+                Owners = owners,
+                Properties = properties,
+                PropertyId = model.PropertyId,
+                ApartmentId = model.ApartmentId,
+                OwnerId = model.OwnerId
             };
 
             return View("DuePayments", viewModel);
@@ -93,8 +98,20 @@ namespace ApartmentManager.Controllers
         }
 
         // GET: Owners
+        [HttpGet]
+        [Authorize(Roles = RoleName.Admin)]
+        public ActionResult Owners()
+        {
+            return View();
+        }
 
 
         // GET: Tenents
+        [HttpGet]
+        [Authorize(Roles = RoleName.Admin)]
+        public ActionResult Tenants()
+        {
+            return View();
+        }
     }
 }

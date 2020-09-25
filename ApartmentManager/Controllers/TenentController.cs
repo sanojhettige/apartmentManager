@@ -62,30 +62,37 @@ namespace ApartmentManager.Controllers
 
                 return View("TenentForm", viewModel);
             }
-            if (tenent.Id == 0)
+            try
             {
-                tenent.CreatedAt = DateTime.Now;
-                tenent.ModifiedAt = DateTime.Now;
-                tenent.CreatedBy = "";
-                tenent.ModifiedBy = "";
-                _context.Tenent.Add(tenent);
+                if (tenent.Id == 0)
+                {
+                    tenent.CreatedAt = DateTime.Now;
+                    tenent.ModifiedAt = DateTime.Now;
+                    tenent.CreatedBy = "";
+                    tenent.ModifiedBy = "";
+                    _context.Tenent.Add(tenent);
 
-            }
-            else
+                }
+                else
+                {
+                    var selectedTenent = _context.Tenent.Single(m => m.Id == tenent.Id);
+                    selectedTenent.Name = tenent.Name;
+                    selectedTenent.NicNo = tenent.NicNo;
+                    selectedTenent.PhoneNumber = tenent.PhoneNumber;
+                    selectedTenent.EmailAddress = tenent.EmailAddress;
+                    selectedTenent.ModifiedAt = DateTime.Now;
+                    selectedTenent.ModifiedBy = "";
+
+                }
+
+                _context.SaveChanges();
+
+                return RedirectToAction("index", "Tenent");
+            } catch(Exception e)
             {
-                var selectedTenent = _context.Tenent.Single(m => m.Id == tenent.Id);
-                selectedTenent.Name = tenent.Name;
-                selectedTenent.NicNo = tenent.NicNo;
-                selectedTenent.PhoneNumber = tenent.PhoneNumber;
-                selectedTenent.EmailAddress = tenent.EmailAddress;
-                selectedTenent.ModifiedAt = DateTime.Now;
-                selectedTenent.ModifiedBy = "";
-
+                return RedirectToAction("index", "Tenent");
             }
-
-            _context.SaveChanges();
-
-            return RedirectToAction("index", "Tenent");
+            
         }
 
         [Authorize(Roles = RoleName.Admin)]

@@ -66,16 +66,17 @@
             });
 
             $("#guards").on("click", ".delete", function () {
-                var button = $(this).attr("data-apartment-id");
+                var button = $(this).attr("data-guard-id");
                 if (confirm("are you sure you want to delete the guard?")) {
                     $.ajax({
                         url: "/api/securityGuard/" + button,
                         method: "DELETE",
-                        Successs: function () {
-
-                            table.row(buttons.parents("tr")).remove().draw();
-
-
+                        dataType: "json",
+                        success: function (data) {
+                            window.location.reload();
+                        },
+                        error: function (err) {
+                            console.log(err);
                         }
                     })
                 }

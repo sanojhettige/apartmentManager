@@ -60,31 +60,39 @@ namespace ApartmentManager.Controllers
 
                 return View("ApartmentTypeForm", viewModel);
             }
-            if (apartmentType.Id == 0)
+            try
             {
-                apartmentType.CreatedAt = DateTime.Now;
-                apartmentType.ModifiedAt = DateTime.Now;
-                apartmentType.CreatedBy = "";
-                apartmentType.ModifiedBy = "";
-                _context.ApartmentType.Add(apartmentType);
+                if (apartmentType.Id == 0)
+                {
+                    apartmentType.CreatedAt = DateTime.Now;
+                    apartmentType.ModifiedAt = DateTime.Now;
+                    apartmentType.CreatedBy = "";
+                    apartmentType.ModifiedBy = "";
+                    _context.ApartmentType.Add(apartmentType);
 
-            }
-            else
+                }
+                else
+                {
+                    var selectedType = _context.ApartmentType.Single(m => m.Id == apartmentType.Id);
+                    selectedType.Name = apartmentType.Name;
+                    selectedType.SquareFeets = apartmentType.SquareFeets;
+                    selectedType.NumRooms = apartmentType.NumRooms;
+                    selectedType.NumBathRooms = apartmentType.NumBathRooms;
+                    selectedType.MaintenanceCharge = apartmentType.MaintenanceCharge;
+                    selectedType.ModifiedAt = DateTime.Now;
+                    selectedType.ModifiedBy = "";
+
+                }
+
+                _context.SaveChanges();
+
+                return RedirectToAction("index", "ApartmentType");
+
+            } catch(Exception e)
             {
-                var selectedType = _context.ApartmentType.Single(m => m.Id == apartmentType.Id);
-                selectedType.Name = apartmentType.Name;
-                selectedType.SquareFeets = apartmentType.SquareFeets;
-                selectedType.NumRooms = apartmentType.NumRooms;
-                selectedType.NumBathRooms = apartmentType.NumBathRooms;
-                selectedType.MaintenanceCharge = apartmentType.MaintenanceCharge;
-                selectedType.ModifiedAt = DateTime.Now;
-                selectedType.ModifiedBy = "";
-
+                return RedirectToAction("index", "ApartmentType");
             }
-
-            _context.SaveChanges();
-
-            return RedirectToAction("index", "ApartmentType");
+            
         }
 
         [Authorize(Roles = RoleName.Admin)]

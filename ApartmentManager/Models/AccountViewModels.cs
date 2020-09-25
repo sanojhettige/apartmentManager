@@ -48,6 +48,7 @@ namespace ApartmentManager.Models
     {
         [Required]
         [Display(Name = "Email")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }
     }
 
@@ -55,7 +56,7 @@ namespace ApartmentManager.Models
     {
         [Required]
         [Display(Name = "Email")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }
 
         [Required]
@@ -77,7 +78,7 @@ namespace ApartmentManager.Models
 
         [Required]
         [Display(Name = "Phone")]
-        [StringLength(15)]
+        [RegularExpression(@"^(?:7|0|(?:\+94))[1-9]{2}[0-9]{7,8}$", ErrorMessage = "Not a valid phone number")]
         public string PhoneNumber { get; set; }
 
         [Display(Name = "User Role")]
@@ -87,7 +88,7 @@ namespace ApartmentManager.Models
         public int PropertyId { get; set; }
 
         [Required]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -113,11 +114,11 @@ namespace ApartmentManager.Models
 
         [Required]
         [Display(Name = "Phone")]
-        [StringLength(15)]
+        [RegularExpression(@"^(?:7|0|(?:\+94))[1-9]{2}[0-9]{7,8}$", ErrorMessage = "Not a valid phone number")]
         public string PhoneNumber { get; set; }
 
         [Required]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -127,7 +128,7 @@ namespace ApartmentManager.Models
     public class ResetPasswordViewModel
     {
         [Required]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -148,7 +149,7 @@ namespace ApartmentManager.Models
     public class ForgotPasswordViewModel
     {
         [Required]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }

@@ -37,6 +37,22 @@ namespace WebApplication2.Controllers.Api
   
         }
 
+
+        //DELETE api/user/1
+        [HttpDelete]
+        public IHttpActionResult DeleteUser(string id)
+        {
+            var selectedUser = _context.Users.SingleOrDefault(c => c.Id == id);
+
+            if (selectedUser == null)
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+
+            _context.Users.Remove(selectedUser);
+            _context.SaveChanges();
+            return Ok(selectedUser);
+
+        }
+
     }
 
 }

@@ -79,7 +79,7 @@ namespace WebApplication2.Controllers.Api
         }
         //DELETE api/tenent/1
         [HttpDelete]
-        public void Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
             var selectedTenent = _context.Tenent.SingleOrDefault(c => c.Id == id);
 
@@ -88,6 +88,7 @@ namespace WebApplication2.Controllers.Api
 
             _context.Tenent.Remove(selectedTenent);
             _context.SaveChanges();
+            return Ok(selectedTenent);
 
         }
 

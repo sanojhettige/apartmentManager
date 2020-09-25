@@ -79,7 +79,7 @@ namespace WebApplication2.Controllers.Api
         }
         //DELETE api/property/1
         [HttpDelete]
-        public void DeleteProperty(int id)
+        public IHttpActionResult DeleteProperty(int id)
         {
             var selectedProperty = _context.Property.SingleOrDefault(c => c.Id == id);
 
@@ -88,6 +88,7 @@ namespace WebApplication2.Controllers.Api
 
             _context.Property.Remove(selectedProperty);
             _context.SaveChanges();
+            return Ok(selectedProperty);
 
         } 
 

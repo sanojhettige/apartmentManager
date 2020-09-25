@@ -83,7 +83,7 @@ namespace WebApplication2.Controllers.Api
         }
         //DELETE api/securityGuard/1
         [HttpDelete]
-        public void DeleteSecurityGuard(int id)
+        public IHttpActionResult DeleteSecurityGuard(int id)
         {
             var selectedGuard = _context.SecurityGuard.SingleOrDefault(c => c.Id == id);
 
@@ -92,6 +92,7 @@ namespace WebApplication2.Controllers.Api
 
             _context.SecurityGuard.Remove(selectedGuard);
             _context.SaveChanges();
+            return Ok(selectedGuard);
 
         }
 

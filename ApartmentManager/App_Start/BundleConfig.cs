@@ -27,6 +27,16 @@ namespace ApartmentManager
             bundles.Add(new ScriptBundle("~/bundles/datepicker-js").Include(
                         "~/Assets/Vendor/date-picker/bootstrap-datepicker.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/report-js").Include(
+                "~/Assets/Vendor/datatables/dataTables.buttons.min.js",
+                "~/Assets/Vendor/datatables/buttons.flash.min.js",
+                "~/Assets/Vendor/datatables/jszip.min.js",
+                "~/Assets/Vendor/datatables/pdfmake.min.js",
+                "~/Assets/Vendor/datatables/vfs_fonts.js",
+                "~/Assets/Vendor/datatables/buttons.html5.min.js",
+                "~/Assets/Vendor/datatables/buttons.print.min.js"
+                ));
+
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
@@ -44,6 +54,9 @@ namespace ApartmentManager
                       ));
             bundles.Add(new StyleBundle("~/bundles/datepicker-css").Include(
                         "~/Assets/Vendor/date-picker/bootstrap-datepicker.css"));
+            bundles.Add(new StyleBundle("~/bundles/report-css").Include(
+                "~/Assets/Vendor/datatables/buttons.dataTables.min.css"
+                ));
         }
     }
 }

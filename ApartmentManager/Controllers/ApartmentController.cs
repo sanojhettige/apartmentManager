@@ -91,32 +91,41 @@ namespace ApartmentManager.Controllers
         [Authorize(Roles = RoleName.Admin)]
         public ActionResult Assign(Apartment apartment)
         {
-            if (apartment.Id > 0)
+            try
             {
-                var selectedApartment = _context.Apartment.Single(m => m.Id == apartment.Id);
-                
-                if(apartment.OwnerId > 0)
+                if (apartment.Id > 0)
                 {
-                    selectedApartment.OwnerId = apartment.OwnerId;
+                    var selectedApartment = _context.Apartment.Single(m => m.Id == apartment.Id);
+
+                    if (apartment.OwnerId > 0)
+                    {
+                        selectedApartment.OwnerId = apartment.OwnerId;
+                    }
+
+                    if (apartment.TenentId > 0 && selectedApartment.OwnerId > 0)
+                    {
+                        selectedApartment.TenentId = apartment.TenentId;
+                    }
+                    else
+                    {
+
+                    }
+                    selectedApartment.ModifiedAt = DateTime.Now;
+                    selectedApartment.ModifiedBy = userId;
+                    _context.SaveChanges();
+
                 }
 
-                if (apartment.TenentId > 0 && selectedApartment.OwnerId > 0)
-                {
-                    selectedApartment.TenentId = apartment.TenentId;
-                } else
-                {
+                if (apartment.PropertyId > 0)
+                    return RedirectToAction("index", "Apartment/Property/" + apartment.PropertyId);
 
-                }
-                selectedApartment.ModifiedAt = DateTime.Now;
-                selectedApartment.ModifiedBy = userId;
-                _context.SaveChanges();
+                return RedirectToAction("index", "Apartment");
 
+            } catch(Exception e)
+            {
+                return RedirectToAction("index", "Apartment");
             }
-
-            if (apartment.PropertyId > 0)
-                return RedirectToAction("index", "Apartment/Property/" + apartment.PropertyId);
-
-            return RedirectToAction("index", "Apartment");
+            
         }
 
 

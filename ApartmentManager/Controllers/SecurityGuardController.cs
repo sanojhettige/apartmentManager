@@ -64,29 +64,36 @@ namespace ApartmentManager.Controllers
 
                 return View("Form", viewModel);
             }
-            if (securityGuard.Id == 0)
+            try
             {
-                securityGuard.CreatedAt = DateTime.Now;
-                securityGuard.ModifiedAt = DateTime.Now;
-                securityGuard.CreatedBy = "";
-                securityGuard.ModifiedBy = "";
-                _context.SecurityGuard.Add(securityGuard);
+                if (securityGuard.Id == 0)
+                {
+                    securityGuard.CreatedAt = DateTime.Now;
+                    securityGuard.ModifiedAt = DateTime.Now;
+                    securityGuard.CreatedBy = "";
+                    securityGuard.ModifiedBy = "";
+                    _context.SecurityGuard.Add(securityGuard);
 
-            }
-            else
+                }
+                else
+                {
+                    var selectedGuard = _context.SecurityGuard.Single(m => m.Id == securityGuard.Id);
+                    selectedGuard.PropertyId = securityGuard.PropertyId;
+                    selectedGuard.Name = securityGuard.Name;
+                    selectedGuard.NicNo = securityGuard.NicNo;
+                    selectedGuard.PhoneNumber = securityGuard.PhoneNumber;
+                    selectedGuard.ModifiedAt = DateTime.Now;
+                    selectedGuard.ModifiedBy = "";
+
+                }
+
+                _context.SaveChanges();
+                return RedirectToAction("index", "SecurityGuard");
+            } catch(Exception e)
             {
-                var selectedGuard = _context.SecurityGuard.Single(m => m.Id == securityGuard.Id);
-                selectedGuard.PropertyId = securityGuard.PropertyId;
-                selectedGuard.Name = securityGuard.Name;
-                selectedGuard.NicNo = securityGuard.NicNo;
-                selectedGuard.PhoneNumber = securityGuard.PhoneNumber;
-                selectedGuard.ModifiedAt = DateTime.Now;
-                selectedGuard.ModifiedBy = "";
-
+                return RedirectToAction("index", "SecurityGuard");
             }
-
-            _context.SaveChanges();
-            return RedirectToAction("index", "SecurityGuard");
+            
         }
 
         [Authorize(Roles = RoleName.Admin)]

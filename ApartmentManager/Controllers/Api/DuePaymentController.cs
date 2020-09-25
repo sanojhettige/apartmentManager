@@ -12,6 +12,7 @@ using Microsoft.Owin.Security;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ApartmentManager.Dtos;
 using ApartmentManager.Models;
+using ApartmentManager.ViewModels;
 
 namespace WebApplication2.Controllers.Api
 {
@@ -25,7 +26,7 @@ namespace WebApplication2.Controllers.Api
         }
 
         //GET /api/duePayment
-        public IEnumerable<MaintenanceInvoiceDto> GetDuePayment(int Id)
+        public IEnumerable<MaintenanceInvoiceDto> GetDuePayment(int? Id)
         {
             if(Id > 0)
             {
@@ -48,6 +49,28 @@ namespace WebApplication2.Controllers.Api
                 .ToList()
                 .Select(Mapper.Map<MaintenanceInvoice, MaintenanceInvoiceDto>);
             }
+
+        }
+
+        //POST: /api/duePayment
+        [HttpPost]
+        public IEnumerable<MaintenanceInvoiceDto> GetDuePayment(ReportFormViewModel model)
+        {
+            var apartmentId = model.ApartmentId != "" ? Int32.Parse(model.ApartmentId): 0;
+            var propertyId = model.PropertyId != "" ? Int32.Parse(model.PropertyId): 0;
+            var ownerId = model.OwnerId != "" ? Int32.Parse(model.OwnerId): 0;
+            var dueQuery = _context.MaintenanceInvoice
+            .Include(p => p.Apartment)
+            .Where(m => m.Status == 1);
+
+            if(apartmentId > 0)
+            {
+                dueQuery.Where(m => m.ApartmentId == apartmentId);
+            }
+
+                return dueQuery
+                .ToList()
+                .Select(Mapper.Map<MaintenanceInvoice, MaintenanceInvoiceDto>);
 
         }
     }

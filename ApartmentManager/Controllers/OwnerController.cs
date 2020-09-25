@@ -60,30 +60,38 @@ namespace ApartmentManager.Controllers
 
                 return View("OwnerForm", viewModel);
             }
-            if (owner.Id == 0)
+            try
             {
-                owner.CreatedAt = DateTime.Now;
-                owner.ModifiedAt = DateTime.Now;
-                owner.CreatedBy = "";
-                owner.ModifiedBy = "";
-                _context.Owner.Add(owner);
+                if (owner.Id == 0)
+                {
+                    owner.CreatedAt = DateTime.Now;
+                    owner.ModifiedAt = DateTime.Now;
+                    owner.CreatedBy = "";
+                    owner.ModifiedBy = "";
+                    _context.Owner.Add(owner);
 
-            }
-            else
+                }
+                else
+                {
+                    var selectedOwner = _context.Owner.Single(m => m.Id == owner.Id);
+                    selectedOwner.Name = owner.Name;
+                    selectedOwner.NicNo = owner.NicNo;
+                    selectedOwner.PhoneNumber = owner.PhoneNumber;
+                    selectedOwner.EmailAddress = owner.EmailAddress;
+                    selectedOwner.ModifiedAt = DateTime.Now;
+                    selectedOwner.ModifiedBy = "";
+
+                }
+
+                _context.SaveChanges();
+
+                return RedirectToAction("index", "Owner");
+
+            } catch(Exception e)
             {
-                var selectedOwner = _context.Owner.Single(m => m.Id == owner.Id);
-                selectedOwner.Name = owner.Name;
-                selectedOwner.NicNo = owner.NicNo;
-                selectedOwner.PhoneNumber = owner.PhoneNumber;
-                selectedOwner.EmailAddress = owner.EmailAddress;
-                selectedOwner.ModifiedAt = DateTime.Now;
-                selectedOwner.ModifiedBy = "";
-
+                return RedirectToAction("index", "Owner");
             }
-
-            _context.SaveChanges();
-
-            return RedirectToAction("index", "Owner");
+            
         }
 
         [Authorize(Roles = RoleName.Admin)]

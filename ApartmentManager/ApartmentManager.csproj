@@ -2529,6 +2529,9 @@
     <Content Include="Views\Apartment\GenerateBill.cshtml" />
     <Content Include="Views\Apartment\ApartmentInvoices.cshtml" />
     <Content Include="Views\Apartment\AddPayment.cshtml" />
+    <Content Include="Views\Report\Apartments.cshtml" />
+    <Content Include="Views\Report\Owners.cshtml" />
+    <Content Include="Views\Report\Tenants.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -57,9 +57,9 @@
                     },
                     {
                         data: "id",
-                        render: function (data, type, unit) {
-                            let content = "<a href='/Manage/UpdateUser/" + unit.id + "' class='btn btn-success btn-sm'>Edit</a>";
-                            content += "<button class='btn btn-danger btn-sm delete' data-us-erid=" + data + ">Delete</button>";
+                        render: function (data, type, user) {
+                            let content = "<a href='/Manage/UpdateUser/" + user.id + "' class='btn btn-success btn-sm'>Edit</a>";
+                            content += "<button class='btn btn-danger btn-sm delete' data-user-id=" + data + ">Delete</button>";
 
                             return "<div class='btn-group'>" + content + "</div>";
                         }
@@ -73,11 +73,12 @@
                     $.ajax({
                         url: "/api/user/" + button,
                         method: "DELETE",
-                        Successs: function () {
-
-                            table.row(buttons.parents("tr")).remove().draw();
-
-
+                        dataType: "json",
+                        success: function (data) {
+                            window.location.reload();
+                        },
+                        error: function (err) {
+                            console.log(err);
                         }
                     })
                 }

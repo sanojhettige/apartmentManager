@@ -21,13 +21,16 @@ namespace ApartmentManager.Models
 
         [Required]
         [Display(Name = "Phone Number")]
+        [RegularExpression(@"^(?:7|0|(?:\+94))[1-9]{2}[0-9]{7,8}$", ErrorMessage = "Not a valid phone number")]
         public string PhoneNumber { get; set; }
 
         [Required]
         [Display(Name = "Email Address")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string EmailAddress { get; set; }
 
         [Display(Name = "Fax Number")]
+        [RegularExpression(@"^(?:7|0|(?:\+94))[1-9]{2}[0-9]{7,8}$", ErrorMessage = "Not a valid phone number")]
         public string FaxNumber { get; set; }
 
         [Required]

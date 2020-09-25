@@ -5,6 +5,16 @@
     ViewBag.Title = "Due Payments";
     Layout = "~/Views/Shared/_Layout.cshtml"; }
 
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Invoices</h2>
+        </div>
+        <div class="col-md-6">
+            @Html.ActionLink("New Invoice", "GenerateBill/" + Html.Display("apartmentId"), "apartment", null, new { @class = "btn btn-primary float-right" })
+        </div>
+    </div>
+
+
 
 <table id="invoices" class="table table-bordered table-hover" url='/api/duePayment/@Html.Display("apartmentId")'>
     <thead>
@@ -21,7 +31,7 @@
 @section scripts
 {
     <script>
-$(document).ready(function () {
+        $(document).ready(function () {
             var table = $("#invoices").DataTable({
                 ajax: {
                     url: $("#invoices").attr("url"),
@@ -64,7 +74,7 @@ $(document).ready(function () {
                             let content = "<a href='/Apartment/AddDuePayment/" + due.id + "' class='btn btn-success btn-sm'>Add Payment</a>";
                             content += "<a href='/Print/Invoice/" + due.id + "' class='btn btn-primary btn-sm'>Download</a>";
 
-                            return "<div class='btn-group'>"+content+"</div>";
+                            return "<div class='btn-group'>" + content + "</div>";
                         }
                     }
                 ]

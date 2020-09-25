@@ -1,0 +1,68 @@
+﻿
+
+@{ ViewBag.Title = "Apartments";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+@section styles
+{
+    @Styles.Render("~/bundles/report-css")
+}
+
+<table id="apartments" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Floor</th>
+            <th>House No</th>
+            <th>Owner Name</th>
+            <th>Tenent Name</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/report-js")
+    <script>
+        $(document).ready(function () {
+            var table = $("#apartments").DataTable({
+                ajax: {
+                    url: "/api/apartment",
+                    dataSrc: ""
+                },
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'csv',
+                        className: 'btn btn-primary'
+                    },
+                    {
+                        extend: 'pdf',
+                        className: 'btn btn-primary'
+                    }
+                ],
+                columns: [
+                    {
+                        data: "floorNo"
+                    },
+
+                    {
+                        data: "unitNo"
+                    },
+                    {
+                        data: "ownerId",
+                        render: function (data, type, apartment) {
+                           return apartment?.owner ? apartment.owner?.name : "No Owner ";
+                        }
+                    },
+                    {
+                        data: "tenentId",
+                        render: function (data, type, apartment) {
+                           return apartment?.tenent ? apartment.tenent?.name : "No Tenent ";
+                        }
+                    }
+                ]
+            });
+        })</script>
+}

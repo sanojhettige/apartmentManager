@@ -64,11 +64,12 @@
                     $.ajax({
                         url: "/api/tenent/" + button,
                         method: "DELETE",
-                        Successs: function () {
-
-                            table.row(buttons.parents("tr")).remove().draw();
-
-
+                        dataType: "json",
+                        success: function (data) {
+                            window.location.reload();
+                        },
+                        error: function (err) {
+                            console.log(err);
                         }
                     })
                 }

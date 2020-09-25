@@ -79,7 +79,7 @@ namespace WebApplication2.Controllers.Api
         }
         //DELETE api/owner/1
         [HttpDelete]
-        public void DeleteOwner(int id)
+        public IHttpActionResult DeleteOwner(int id)
         {
             var selectedOwner = _context.Owner.SingleOrDefault(c => c.Id == id);
 
@@ -88,6 +88,7 @@ namespace WebApplication2.Controllers.Api
 
             _context.Owner.Remove(selectedOwner);
             _context.SaveChanges();
+            return Ok(selectedOwner);
 
         }
 

@@ -201,7 +201,18 @@ namespace ApartmentManager.Controllers
             }
             var user = await UserManager.FindByIdAsync(model.Id);
 
-            if(user ==  null)
+            var list = new SelectList(new[]
+            {
+                new { ID = "Admin", Name = "Admin" },
+                new { ID = "ApartmentAdmin", Name = "Property Manager" },
+                new { ID = "FinanceManager", Name = "Finance Manager" },
+            },
+            "ID", "Name", 1);
+
+            ViewData["list"] = list;
+
+
+            if (user ==  null)
             {
                 var userData = new ApplicationUser
                 {
@@ -219,7 +230,17 @@ namespace ApartmentManager.Controllers
                     var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
                     var roleManager = new RoleManager<IdentityRole>(roleStore);
                     await roleManager.CreateAsync(new IdentityRole(model.RoleId));
-                    await UserManager.AddToRoleAsync(user.Id, model.RoleId);
+                    if(model.RoleId.ToString() == "Admin")
+                    {
+                        await UserManager.AddToRoleAsync(userData.Id, "admin");
+                    } else if(model.RoleId.ToString() == "ApartmentAdmin")
+                    {
+                        await UserManager.AddToRoleAsync(userData.Id, "apartmentAdmin");
+                    } else if(model.RoleId.ToString() == "FinanceManager")
+                    {
+                        await UserManager.AddToRoleAsync(userData.Id, "financeManager");
+                    }
+                    
                     return RedirectToAction("Users", "Manage");
                 }
 
@@ -237,7 +258,20 @@ namespace ApartmentManager.Controllers
                     var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
                     var roleManager = new RoleManager<IdentityRole>(roleStore);
                     await roleManager.CreateAsync(new IdentityRole(model.RoleId));
-                    await UserManager.AddToRoleAsync(user.Id, model.RoleId);
+                    //await UserManager.AddToRoleAsync(user.Id, model.RoleId);
+                    if (model.RoleId.ToString() == "Admin")
+                    {
+                        await UserManager.AddToRoleAsync(user.Id, "admin");
+                    }
+                    else if (model.RoleId.ToString() == "ApartmentAdmin")
+                    {
+                        await UserManager.AddToRoleAsync(user.Id, "apartmentAdmin");
+                    }
+                    else if (model.RoleId.ToString() == "FinanceManager")
+                    {
+                        await UserManager.AddToRoleAsync(user.Id, "financeManager");
+                    }
+
 
                     return RedirectToAction("Index", new { Message = ManageMessageId.UpdateProfileSuccess });
                 }

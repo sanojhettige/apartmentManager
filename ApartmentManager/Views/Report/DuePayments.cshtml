@@ -6,37 +6,43 @@
     Layout = "~/Views/Shared/_Layout.cshtml"; }
 
 
-@using (Html.BeginForm("DuePayments", "Report"))
+@section styles
+{
+    @Styles.Render("~/bundles/report-css")
+}
+
+
+@using (Html.BeginForm("DuePayments", "Report", FormMethod.Post, new { id = "dueForm" }))
 {
 
     <div class="row">
         <div class="form-group col-md-3">
             @Html.LabelFor(m => m.PropertyId)
             <div class="input-group">
-                @Html.DropDownListFor(m => m.PropertyId, new SelectList(Model.Properties, "Id", "propertyName"), "Select Property", new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.PropertyId, new SelectList(Model.Properties, "Id", "propertyName"), "Select Property", new { @class = "form-control", id = "PropertyId" })
             </div>
             @Html.ValidationMessageFor(m => m.PropertyId)
         </div>
         <div class="form-group col-md-3">
             @Html.LabelFor(m => m.ApartmentId)
             <div class="input-group">
-                @Html.DropDownListFor(m => m.ApartmentId, new SelectList(Model.Apartments, "Id", "UnitNo"), "Select Apartment", new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.ApartmentId, new SelectList(Model.Apartments, "Id", "UnitNo"), "Select Apartment", new { @class = "form-control", id = "ApartmentId" })
             </div>
             @Html.ValidationMessageFor(m => m.ApartmentId)
         </div>
         <div class="form-group col-md-3">
             @Html.LabelFor(m => m.OwnerId)
             <div class="input-group">
-                @Html.DropDownListFor(m => m.OwnerId, new SelectList(Model.Owners, "Id", "Name"), "Select Owner", new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.OwnerId, new SelectList(Model.Owners, "Id", "Name"), "Select Owner", new { @class = "form-control", id = "OwnerId" })
             </div>
             @Html.ValidationMessageFor(m => m.OwnerId)
         </div>
         <div class="col-md-3">
-            <br/>
+            <br />
             @Html.AntiForgeryToken()
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
-    </div> }
+    </div>  }
 
 
 
@@ -47,7 +53,7 @@
         <tr>
             <th>Property Name</th>
             <th>Month</th>
-            <th>Unit No</th>
+            <th>Floor/Unit No</th>
             <th>Owner Name</th>
             <th>Total Due</th>
             <th>Actions</th>
@@ -57,12 +63,38 @@
 </table>
 @section scripts
 {
-    <script>$(document).ready(function () {
+    @Scripts.Render("~/bundles/report-js")
+    <script>
+        $(document).ready(function () {
+
             var table = $("#dues").DataTable({
                 ajax: {
                     url: "/api/duePayment",
-                    dataSrc: ""
+                    dataSrc: "",
+                    method: "POST",
+                    data: {
+                        PropertyId: $("#PropertyId").val() || 0,
+                        ApartmentId: $("#ApartmentId").val() || 0,
+                        OwnerId: $("#OwnerId").val() || 0,
+                    },
                 },
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'csv',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4]
+                        },
+                        className: 'btn btn-primary'
+                    },
+                    {
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4]
+                        },
+                        className: 'btn btn-primary'
+                    }
+                ],
                 columns: [
                     {
                         data: "property.property.propertyName",
@@ -79,11 +111,14 @@
                                 return parts[0] + "-" + parts[1];
                             }
                             return "";
-                            
+
                         }
                     },
                     {
-                        data: "apartment.unitNo"
+                        data: "apartment.unitNo",
+                        render: function (data, type, due) {
+                            return " Level "+ due?.apartment?.floorNo+"/ Unit "+ due?.apartment?.unitNo
+                        }
                     },
                     {
                         data: "property.owner.name",
@@ -93,21 +128,23 @@
                     },
                     {
                         data: "maintenanceCost",
+                        render: function (data, type, due) {
+                            let total = due.maintenanceCost + due.electricityCost + due.waterCost + due.gasCost + due.otherCost;
+                            let paid = due.paidAmount;
+                            return total - paid;
+                        }
                     },
                     {
                         data: "id",
                         render: function (data, type, due) {
-                            let content = "<a href='/Report/AddDuePayment/" + due.id + "' class='btn btn-success btn-sm'>Add Payment</a>";
-                            content += "<a href='/Print/Invoice/" + due.id + "' class='btn btn-primary btn-sm'>Download</a>";
+                            let content = "<a href='/Print/Invoice/" + due.id + "' class='btn btn-primary btn-sm'>Download</a>";
 
-                            return "<div class='btn-group'>"+content+"</div>";
+                            return "<div class='btn-group'>" + content + "</div>";
                         }
                     }
                 ]
             });
 
-       
+
         })</script>
 }
-
-

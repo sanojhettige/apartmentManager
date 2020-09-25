@@ -60,34 +60,42 @@ namespace ApartmentManager.Controllers
 
                 return View("PropertyForm", viewModel);
             }
-            if (property.Id == 0)
+            try
             {
-                property.CreatedAt = DateTime.Now;
-                property.ModifiedAt = DateTime.Now;
-                property.CreatedBy = 1;
-                property.ModifiedBy = 1;
-                _context.Property.Add(property);
+                if (property.Id == 0)
+                {
+                    property.CreatedAt = DateTime.Now;
+                    property.ModifiedAt = DateTime.Now;
+                    property.CreatedBy = 1;
+                    property.ModifiedBy = 1;
+                    _context.Property.Add(property);
 
-            }
-            else
+                }
+                else
+                {
+                    var selectedPprty = _context.Property.Single(m => m.Id == property.Id);
+                    selectedPprty.PropertyName = property.PropertyName;
+                    selectedPprty.Address = property.Address;
+                    selectedPprty.PhoneNumber = property.PhoneNumber;
+                    selectedPprty.EmailAddress = property.EmailAddress;
+                    selectedPprty.FaxNumber = property.FaxNumber;
+                    selectedPprty.NumFloors = property.NumFloors;
+                    selectedPprty.NumUnits = property.NumUnits;
+                    selectedPprty.OtherAmenities = property.OtherAmenities;
+                    selectedPprty.ModifiedAt = DateTime.Now;
+                    selectedPprty.ModifiedBy = 1;
+
+                }
+
+                _context.SaveChanges();
+
+                return RedirectToAction("index", "Property");
+
+            } catch(Exception e)
             {
-                var selectedPprty = _context.Property.Single(m => m.Id == property.Id);
-                selectedPprty.PropertyName = property.PropertyName;
-                selectedPprty.Address = property.Address;
-                selectedPprty.PhoneNumber = property.PhoneNumber;
-                selectedPprty.EmailAddress = property.EmailAddress;
-                selectedPprty.FaxNumber = property.FaxNumber;
-                selectedPprty.NumFloors = property.NumFloors;
-                selectedPprty.NumUnits = property.NumUnits;
-                selectedPprty.OtherAmenities = property.OtherAmenities;
-                selectedPprty.ModifiedAt = DateTime.Now;
-                selectedPprty.ModifiedBy = 1;
-
+                return RedirectToAction("index", "Property");
             }
-
-            _context.SaveChanges();
-
-            return RedirectToAction("index", "Property");
+            
         }
 
         [Authorize(Roles = RoleName.Admin)]

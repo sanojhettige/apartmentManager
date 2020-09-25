@@ -79,7 +79,7 @@ namespace WebApplication2.Controllers.Api
         }
         //DELETE api/apartmentType/1
         [HttpDelete]
-        public void DeleteApartmentType(int id)
+        public IHttpActionResult DeleteApartmentType(int id)
         {
             var selectedAptType = _context.ApartmentType.SingleOrDefault(c => c.Id == id);
 
@@ -88,6 +88,8 @@ namespace WebApplication2.Controllers.Api
 
             _context.ApartmentType.Remove(selectedAptType);
             _context.SaveChanges();
+            return Ok(selectedAptType);
+
 
         }
 
